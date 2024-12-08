@@ -1,0 +1,54 @@
+body {
+    margin-top: 3.5rem !important;
+}
+
+p:last-child,
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+h5:last-child,
+h6:last-child,
+ol:last-child,
+ul:last-child,
+blockquote:last-child,
+pre:has(code):last-child {
+    margin-bottom: 0;
+}
+
+blockquote {
+    border-left: .4em solid #d2d2d2;
+    padding: 1em;
+}
+
+pre:has(code) {
+    padding: 1em;
+    border-radius: .5em;
+}
+
+.badge {
+    font-weight: 500 !important;
+}
+
+.pfp {
+    opacity: 1;
+    transition-duration: 250ms;
+}
+
+.pfp:hover {
+    opacity: .5;
+    transition-duration: 250ms;
+}
+
+.active:has(img.pfp) {
+    opacity: .5;
+}
+
+.dropdown-item-danger {
+    color: var(--bs-red) !important;
+}
+
+.dropdown-item-danger:active {
+    background-color: var(--bs-red) !important;
+    color: white !important;
+}
