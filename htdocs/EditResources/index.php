@@ -771,8 +771,8 @@ function getDisplayLinks()
           if ($("#newfolderalert-foldername").val().trim() === "") {
             alert("Give a name to the folder.");
             return;
-          } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#newfolderalert-foldername").val())) {
-            alert("Only a-zA-Z0-9_ (). are allowed.");
+          } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#newfolderalert-foldername").val())) {
+            alert("Only a-zA-Z0-9_ () are allowed.");
             return;
           }
 
