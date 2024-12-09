@@ -657,8 +657,8 @@ function getDisplayLinks()
           if ($("#renamefileordiralert-filebasename").val().trim() === "") {
             alert("Give a name to the file.");
             return;
-          } else if (/[^\w\s\d\-_~,;\[\]\(\).]/.test($("#renamefileordiralert-filebasename").val())) {
-            alert("These characters can't be included in the file name:\n\\ / : * ? \" < > |");
+          } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#renamefileordiralert-filebasename").val())) {
+            alert("Only a-zA-Z0-9_ (). are allowed.");
             return;
           } else if ($("#renamefileordiralert-filefullname").html() === $("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()) {
             alert("Give a new name to the file.");
@@ -771,8 +771,8 @@ function getDisplayLinks()
           if ($("#newfolderalert-foldername").val().trim() === "") {
             alert("Give a name to the folder.");
             return;
-          } else if (/[^\w\s\d\-_~,;\[\]\(\).]/.test($("#newfolderalert-foldername").val())) {
-            alert("These characters can't be included in the folder name:\n\\ / : * ? \" < > |");
+          } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#newfolderalert-foldername").val())) {
+            alert("Only a-zA-Z0-9_ (). are allowed.");
             return;
           }
 
