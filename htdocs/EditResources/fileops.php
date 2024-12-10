@@ -9,10 +9,10 @@ if ($current->accessstatus)
         if (isset($_GET["rename"]) && file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"]))
         {
             $_POST["newfilename"] = trim($_POST["newfilename"]);
-            if (preg_match('/[^a-zA-Z0-9_ \(\).]/', $_POST["newfilename"]) === 0 && strlen($_POST["newfilename"]) <= 64 && $_POST["newfilename"] != basename($_POST["filename"]))
+            $newfilename = $_POST["newfilename"];
+            $extension = pathinfo($_POST["filename"])["extension"];
+            if (preg_match('/[^a-zA-Z0-9_ \(\).]/', $newfilename) === 0 && strlen($newfilename + (isset($extension) ? "." . $extension : "")) <= 64 && $newfilename != basename($_POST["filename"]))
             {
-                $newfilename = $_POST["newfilename"];
-                $extension = pathinfo($_POST["filename"])["extension"];
                 $counter = 1;
                 while (file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename . (isset($extension) ? "." . $extension : "")))
                 {
