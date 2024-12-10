@@ -232,7 +232,7 @@ function random_str(): string
 
 function isURL(string $url): bool
 {
-    if (preg_match("/^https?:\/\//", $url))
+    if (preg_match('/^https?:\\/\\//', $url))
     {
         return true;
     }
@@ -241,11 +241,11 @@ function isURL(string $url): bool
 
 function pathInjectionSecure(string $str): bool
 {
-    if (str_contains($str, "..") || str_contains($str, "~")) // Blocks injection on Unix and Windows
+    if (preg_match('/^([^\\\\\\/]+\\.\\.[^\\\\\\/]?|[^\\\\\\/]?\\.\\.[^\\\\\\/]+)$/', $str))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 // Root Exceptions

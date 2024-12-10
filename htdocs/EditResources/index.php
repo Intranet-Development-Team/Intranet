@@ -657,10 +657,10 @@ function getDisplayLinks()
           if ($("#renamefileordiralert-filebasename").val().trim() === "") {
             alert("Give a name to the file.");
             return;
-          } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#renamefileordiralert-filebasename").val())) {
-            alert("Only a-zA-Z0-9_ (). are allowed.");
+          } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#renamefileordiralert-filebasename").val())) {
+            alert("Only a-zA-Z0-9_ () are allowed.");
             return;
-          } else if (($("#renamefileordiralert-filebasename").val().trim() + $("#renamefileordiralert-fileextension").html()).length > 64) {
+          } else if (($("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()).length > 64) {
             alert("File name cannot exceed 64 characters.");
             return;
           } else if ($("#renamefileordiralert-filefullname").html() === $("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()) {
@@ -777,7 +777,7 @@ function getDisplayLinks()
           } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#newfolderalert-foldername").val())) {
             alert("Only a-zA-Z0-9_ () are allowed.");
             return;
-          } else if ($("#newfolderalert-foldername").val().trim().length > 64) {
+          } else if ($("#newfolderalert-foldername").val().length > 64) {
             alert("Folder name cannot exceed 64 characters.");
             return;
           }
@@ -837,7 +837,10 @@ function getDisplayLinks()
           if ($("#newfilealert-files").val().trim() === "") {
             alert("Select a file to upload.");
             return;
-          } else if ($("#newfilealert-files").val().split('\\').pop().length > 64) {
+          } else if (/[^a-zA-Z0-9_ \(\)]/.test(($("#newfilealert-files").val().split(/(\\|\/)/g).pop()).split(".").pop().join(''))) {
+            alert("Only a-zA-Z0-9_ () are allowed in file name.");
+            return;
+          } else if ($("#newfilealert-files").val().split(/(\\|\/)/g).pop().length > 64) {
             alert("File name cannot exceed 64 characters.");
             return;
           } else if ($('#newfilealert-files')[0].files[0].size > 10485760) {

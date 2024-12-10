@@ -10,23 +10,16 @@ if ($current->accessstatus)
         {
             $_POST["newfilename"] = trim($_POST["newfilename"]);
             $newfilename = $_POST["newfilename"];
-            $extension = pathinfo($_POST["filename"])["extension"];
-            if (preg_match('/[^a-zA-Z0-9_ \(\).]/', $newfilename) === 0 && strlen($newfilename + (isset($extension) ? "." . $extension : "")) <= 64 && $newfilename != basename($_POST["filename"]))
+            $extension = pathinfo($_POST["filename"])["extension"] ?? "";
+            if (preg_match('/[^a-zA-Z0-9_ \\(\\)]/', $newfilename) === 0 && strlen($newfilename + (!empty($extension) ? "." . $extension : "")) <= 64 && $newfilename != pathinfo($_POST["filename"])["filename"])
             {
                 $counter = 1;
-                while (file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename . (isset($extension) ? "." . $extension : "")))
+                while (file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename . (!empty($extension) ? "." . $extension : "")))
                 {
                     $newfilename = $_POST["newfilename"] . " ($counter)";
                     ++$counter;
                 }
-                if (is_dir($targetfilepath))
-                {
-                    rename("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"], "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename);
-                }
-                else if (is_file($targetfilepath))
-                {
-                    rename("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"], "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename . (isset($extension) ? "." . $extension : ""));
-                }
+                rename("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"], "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfilename . (!empty($extension) ? "." . $extension : ""));
             }
             else
             {
@@ -61,16 +54,16 @@ if ($current->accessstatus)
         {
             if (is_dir($targetfilepath))
             {
-                $_POST["newfoldername"] = trim(urldecode($_POST["newfoldername"]));
+                $_POST["newfoldername"] = trim($_POST["newfoldername"]);
                 $newfoldername = $_POST["newfoldername"];
-                $counter = 1;
-                while (is_dir("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfoldername))
+                if (preg_match('/[^a-zA-Z0-9_ \\(\\)]/', $newfoldername) === 0 && strlen($newfoldername) <= 64)
                 {
-                    $newfoldername = $_POST["newfoldername"] . " ($counter)";
-                    ++$counter;
-                }
-                if (preg_match("/[^a-zA-Z0-9_ \(\).]/", $_POST["newfoldername"]) === 0 && strlen($_POST["newfoldername"]) <= 64)
-                {
+                    $counter = 1;
+                    while (is_dir("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfoldername))
+                    {
+                        $newfoldername = $_POST["newfoldername"] . " ($counter)";
+                        ++$counter;
+                    }
                     mkdir("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfoldername, 0700);
                 }
                 else
@@ -85,26 +78,30 @@ if ($current->accessstatus)
         }
         else if (isset($_GET["newfileupload"]) && is_dir("../Resources/Resources Files/FILES/" . $_GET["filepath"]))
         {
-            if (is_uploaded_file($_FILES['file']['tmp_name']) && preg_match('/[^a-zA-Z0-9_ \(\).]/', $_FILES["file"]["name"]) === 0 && strlen($_FILES["file"]["name"]) <= 64 && $_FILES["file"]["size"] <= 10485760)
+            if (is_uploaded_file($_FILES['file']['tmp_name']) && $_FILES["file"]["size"] <= 10485760)
             {
-                $allowedtypes = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "apng", "avif", "gif", "png", "svg", "webp", "bmp", "tif", "tiff", "eps", "raw", "heif", "heic", "html", "yaml", "md", "xml", "xhtml", "json", "mp3", "aac", "ogg", "wav", "flac", "ape", "alac", "pdf", "webm", "mkv", "flv", "vob", "ogv", "ogg", "avi", "mov", "qt", "wmv", "mpg", "amv", "mp4", "m4p", "m4v", "mpeg", "zip", "rar", "7z", "tar", "gz", "xz", "doc", "docx", "odt", "rtf", "txt", "xls", "xlsx", "ods", "xls", "xlsx", "ods", "ppt", "pptx", "odp"];
-                if (in_array(pathinfo($_FILES["file"]["name"])["extension"], $allowedtypes))
+                $originalfilename = pathinfo(basename($_FILES["file"]["name"]))["filename"];
+                $fileextension = pathinfo($_FILES["file"]["name"])["extension"];
+                $filename = $originalfilename;
+
+                if (preg_match('/[^a-zA-Z0-9_ \\(\\)]/', $originalfilename) === 0 && strlen(basename($_FILES["file"]["name"])) <= 64)
                 {
-                    $originalfilename = pathinfo(basename($_FILES["file"]["name"]))["filename"];
-                    $fileextension = pathinfo($_FILES["file"]["name"])["extension"];
-                    $filename = $originalfilename;
-                    $counter = 1;
-                    while (is_file("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension))
+                    $allowedtypes = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "apng", "avif", "gif", "png", "svg", "webp", "bmp", "tif", "tiff", "eps", "raw", "heif", "heic", "html", "yaml", "md", "xml", "xhtml", "json", "mp3", "aac", "ogg", "wav", "flac", "ape", "alac", "pdf", "webm", "mkv", "flv", "vob", "ogv", "ogg", "avi", "mov", "qt", "wmv", "mpg", "amv", "mp4", "m4p", "m4v", "mpeg", "zip", "rar", "7z", "tar", "gz", "xz", "doc", "docx", "odt", "rtf", "txt", "xls", "xlsx", "ods", "xls", "xlsx", "ods", "ppt", "pptx", "odp"];
+                    if (in_array($fileextension, $allowedtypes))
                     {
-                        $filename = $originalfilename . " ($counter)";
-                        ++$counter;
+                        $counter = 1;
+                        while (is_file("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension))
+                        {
+                            $filename = $originalfilename . " ($counter)";
+                            ++$counter;
+                        }
+                        move_uploaded_file($_FILES["file"]["tmp_name"], "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension);
+                        chmod("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension, 0600);
                     }
-                    move_uploaded_file($_FILES["file"]["tmp_name"], "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension);
-                    chmod("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $filename . "." . $fileextension, 0600);
-                }
-                else
-                {
-                    echo "File upload failed. The file type is not allowed. Please try again.";
+                    else
+                    {
+                        echo "File upload failed. Please try again.";
+                    }
                 }
             }
             else
