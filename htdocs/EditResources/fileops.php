@@ -9,7 +9,7 @@ if ($current->accessstatus)
         if (isset($_GET["rename"]) && file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"]))
         {
             $_POST["newfilename"] = trim($_POST["newfilename"]);
-            if (preg_match('/[^a-zA-Z0-9_ \(\).]/', $_POST["newfilename"]) === 0 && $_POST["newfilename"] != basename($_POST["filename"]))
+            if (preg_match('/[^a-zA-Z0-9_ \(\).]/', $_POST["newfilename"]) === 0 && strlen($_POST["newfilename"]) <= 64 && $_POST["newfilename"] != basename($_POST["filename"]))
             {
                 $newfilename = $_POST["newfilename"];
                 $extension = pathinfo($_POST["filename"])["extension"];
@@ -69,7 +69,7 @@ if ($current->accessstatus)
                     $newfoldername = $_POST["newfoldername"] . " ($counter)";
                     ++$counter;
                 }
-                if (preg_match("/[^\w\s\d\-_~,;\[\]\(\).]/", $_POST["newfoldername"]) === 0)
+                if (preg_match("/[^a-zA-Z0-9_ \(\).]/", $_POST["newfoldername"]) === 0 && strlen($_POST["newfoldername"]) <= 64)
                 {
                     mkdir("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $newfoldername, 0700);
                 }
@@ -85,7 +85,7 @@ if ($current->accessstatus)
         }
         else if (isset($_GET["newfileupload"]) && is_dir("../Resources/Resources Files/FILES/" . $_GET["filepath"]))
         {
-            if (is_uploaded_file($_FILES['file']['tmp_name']) && preg_match('/[^a-zA-Z0-9_ \(\).]/', $_FILES["file"]["name"]) === 0 && $_FILES["file"]["size"] <= 10485760)
+            if (is_uploaded_file($_FILES['file']['tmp_name']) && preg_match('/[^a-zA-Z0-9_ \(\).]/', $_FILES["file"]["name"]) === 0 && strlen($_FILES["file"]["name"]) <= 64 && $_FILES["file"]["size"] <= 10485760)
             {
                 $allowedtypes = ["jpg", "jpeg", "jfif", "pjpeg", "pjp", "apng", "avif", "gif", "png", "svg", "webp", "bmp", "tif", "tiff", "eps", "raw", "heif", "heic", "html", "yaml", "md", "xml", "xhtml", "json", "mp3", "aac", "ogg", "wav", "flac", "ape", "alac", "pdf", "webm", "mkv", "flv", "vob", "ogv", "ogg", "avi", "mov", "qt", "wmv", "mpg", "amv", "mp4", "m4p", "m4v", "mpeg", "zip", "rar", "7z", "tar", "gz", "xz", "doc", "docx", "odt", "rtf", "txt", "xls", "xlsx", "ods", "xls", "xlsx", "ods", "ppt", "pptx", "odp"];
                 if (in_array(pathinfo($_FILES["file"]["name"])["extension"], $allowedtypes))
