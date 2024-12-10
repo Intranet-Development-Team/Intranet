@@ -660,7 +660,7 @@ function getDisplayLinks()
           } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#renamefileordiralert-filebasename").val())) {
             alert("Only a-zA-Z0-9_ (). are allowed.");
             return;
-          } else if ($("#renamefileordiralert-filebasename").val().length >= 64) {
+          } else if (($("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()).length > 64) {
             alert("File name cannot exceed 64 characters.");
             return;
           } else if ($("#renamefileordiralert-filefullname").html() === $("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()) {
@@ -777,7 +777,7 @@ function getDisplayLinks()
           } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#newfolderalert-foldername").val())) {
             alert("Only a-zA-Z0-9_ () are allowed.");
             return;
-          } else if ($("#newfolderalert-foldername").val().length >= 64) {
+          } else if ($("#newfolderalert-foldername").val().length > 64) {
             alert("Folder name cannot exceed 64 characters.");
             return;
           }
@@ -836,6 +836,9 @@ function getDisplayLinks()
         function newfileuploadsubmit() {
           if ($("#newfilealert-files").val().trim() === "") {
             alert("Select a file to upload.");
+            return;
+          } else if ($("#newfilealert-files").val().split('\\').pop().length > 64) {
+            alert("File name cannot exceed 64 characters.");
             return;
           } else if ($('#newfilealert-files')[0].files[0].size > 10485760) {
             alert("Compress the file to make it smaller than 10 MB (10485760 bytes).");
