@@ -1,5 +1,4 @@
 php_value date.timezone Asia/Hong_Kong
-php_value auto_prepend_file C:\xampp\htdocs\CoreLibrary\CoreFunctions.php
 
 <Files ~ "\.txt$">
     Deny from All

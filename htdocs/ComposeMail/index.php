@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Mail", "ComposeMail");
 require("../CoreLibrary/Mail.php");
 

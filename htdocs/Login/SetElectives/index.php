@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Set Electives");
 
 $electives = SUBJECTS["electives"];
@@ -25,6 +25,8 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
   }
 }
 ?>
+<!DOCTYPE html>
+<html>
 <style>
   .form-signin {
     text-align: center;

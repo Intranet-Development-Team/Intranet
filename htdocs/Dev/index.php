@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Dev Console", "Dev", ["developer"]);
 if ($current->accessstatus)
 {

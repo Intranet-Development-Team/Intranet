@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Set Birthday");
 
 require("../../CoreLibrary/DatetimeHandlers.php");

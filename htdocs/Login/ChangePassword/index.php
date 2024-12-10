@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Change Password");
 if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/firstlogin.txt"))
 {

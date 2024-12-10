@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Assignments", "EditAssignments");
 require("../CoreLibrary/Assignments.php");
 require("../CoreLibrary/DatetimeHandlers.php");

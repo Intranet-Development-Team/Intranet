@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Mod Console", "Mod", ["moderator"]);
 if ($current->accessstatus)
 {

@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Resources", "Resources");
 
 if ($current->accessstatus && pathInjectionSecure($_GET["filepath"] . $_GET["filename"]))

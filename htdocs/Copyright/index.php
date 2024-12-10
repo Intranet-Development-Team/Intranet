@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Copyright", "Copyright", USER_LIST, false);
 ?>
 <!DOCTYPE html>

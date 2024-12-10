@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Calendar", "EditCalendarEvents");
 
 require("../CoreLibrary/CalendarEvents.php");

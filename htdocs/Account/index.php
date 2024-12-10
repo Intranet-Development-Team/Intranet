@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Account Settings", "Account");
 if ($current->accessstatus)
 {

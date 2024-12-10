@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Blog", "Blog");
 require("../CoreLibrary/Blog.php");
 

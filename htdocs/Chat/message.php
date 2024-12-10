@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Chat", "Chat");
 require_once("../CoreLibrary/IMP.php");
 $IMP = new IMP();

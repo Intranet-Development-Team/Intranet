@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 function getDevice()
 {
   $useragentinfo = $_SERVER['HTTP_USER_AGENT'];

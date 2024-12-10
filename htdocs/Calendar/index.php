@@ -1,4 +1,6 @@
 <?php
+require("../CoreLibrary/CoreFunctions.php");
+
 $current = new Session("Calendar", "Calendar");
 require("../CoreLibrary/CalendarEvents.php");
 ?>
