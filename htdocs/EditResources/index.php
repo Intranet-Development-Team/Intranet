@@ -654,7 +654,7 @@ function getDisplayLinks()
         }
 
         function renamefilesubmit() {
-          if ($("#renamefileordiralert-filebasename").val().trim() === "") {
+          if ($("#renamefileordiralert-filebasename").val() === "") {
             alert("Give a name to the file.");
             return;
           } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#renamefileordiralert-filebasename").val())) {
@@ -771,7 +771,7 @@ function getDisplayLinks()
         }
 
         function newfoldersubmit() {
-          if ($("#newfolderalert-foldername").val().trim() === "") {
+          if ($("#newfolderalert-foldername").val() === "") {
             alert("Give a name to the folder.");
             return;
           } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#newfolderalert-foldername").val())) {
@@ -834,10 +834,10 @@ function getDisplayLinks()
         }
 
         function newfileuploadsubmit() {
-          if ($("#newfilealert-files").val().trim() === "") {
+          if ($("#newfilealert-files").val() === "") {
             alert("Select a file to upload.");
             return;
-          } else if (/[^a-zA-Z0-9_ \(\)]/.test(($("#newfilealert-files").val().split(/(\\|\/)/g).pop()).split(".").pop().join(''))) {
+          } else if (/[^a-zA-Z0-9_ \(\)]/.test(/(?:\/|\\)([^\\\/]*)\..+$/.exec($("#newfilealert-files").val())[0])) {
             alert("Only a-zA-Z0-9_ () are allowed in file name.");
             return;
           } else if ($("#newfilealert-files").val().split(/(\\|\/)/g).pop().length > 64) {
