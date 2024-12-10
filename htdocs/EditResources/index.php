@@ -660,6 +660,9 @@ function getDisplayLinks()
           } else if (/[^a-zA-Z0-9_ \(\).]/.test($("#renamefileordiralert-filebasename").val())) {
             alert("Only a-zA-Z0-9_ (). are allowed.");
             return;
+          } else if ($("#renamefileordiralert-filebasename").val().length >= 64) {
+            alert("File name cannot exceed 64 characters.");
+            return;
           } else if ($("#renamefileordiralert-filefullname").html() === $("#renamefileordiralert-filebasename").val() + $("#renamefileordiralert-fileextension").html()) {
             alert("Give a new name to the file.");
             return;
@@ -773,6 +776,9 @@ function getDisplayLinks()
             return;
           } else if (/[^a-zA-Z0-9_ \(\)]/.test($("#newfolderalert-foldername").val())) {
             alert("Only a-zA-Z0-9_ () are allowed.");
+            return;
+          } else if ($("#newfolderalert-foldername").val().length >= 64) {
+            alert("Folder name cannot exceed 64 characters.");
             return;
           }
 
