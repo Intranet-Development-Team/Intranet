@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Blog", "NewBlog");
-require("../CoreLibrary/Blog.php");
+require_once("../CoreLibrary/Blog.php");
 
 if ($current->accessstatus && isset($_POST["submit"]) && isset($_POST["title"]) && isset($_POST["content"]) && isset($_POST["visibility"]))
 {

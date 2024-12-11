@@ -1,5 +1,5 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Copyright", "Copyright", USER_LIST, false);
 ?>

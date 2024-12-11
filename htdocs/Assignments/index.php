@@ -1,9 +1,9 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Assignments", "Assignments");
-require("../CoreLibrary/Assignments.php");
-require("../CoreLibrary/DatetimeHandlers.php");
+require_once("../CoreLibrary/Assignments.php");
+require_once("../CoreLibrary/DatetimeHandlers.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,7 +48,7 @@ require("../CoreLibrary/DatetimeHandlers.php");
       }
       else if (($assignment["due"] === "" || strtotime($assignment["due"]) >= strtotime("today")) && !$done)
       {
-        $assignmentDisplay_Assigned .= '<div class="card shadow border-0 mb-3" id="' . $index . '"><div class="card-body d-flex"><div class="align-self-center" style="width:2em;"><button type="button" class="btn btn-primary p-0 d-flex justify-content-center" style="width:2rem;height:2rem;" onclick="queueAssignmentsOps(this, \'done\')"><i class="bi bi-check-lg align-self-center"></i></button></div><div class="vr ms-3 me-3"></div><div class="align-self-center fw-bold me-3">' . $assignment["subject"] . '</div><div class="flex-fill text-break align-self-center">' . $assignment["content"] . '</div><div class="ms-3 align-self-center text-end" style="color:var(--bs-danger);min-width:5rem;" data-originaldate="' . $assignment["due"] . '">' . ($assignment["due"] === "" ? "No due date" : ucfirst(displayDatetime($assignment["due"]))) . '</div></div></div>';
+        $assignmentDisplay_Assigned .= '<div class="card shadow border-0 mb-3" id="' . $index . '"><div class="card-body d-flex"><div class="align-self-center" style="width:2em;"><button type="button" class="btn btn-primary p-0 d-flex justify-content-center" style="width:2rem;height:2rem;" onclick="queueAssignmentsOps(this, \'done\')"><i class="bi bi-check-lg align-self-center"></i></button></div><div class="vr ms-3 me-3"></div><div class="align-self-center fw-bold me-3">' . $assignment["subject"] . '</div><div class="flex-fill text-break align-self-center">' . $assignment["content"] . '</div><div class="ms-3 align-self-center text-end" style="min-width:5rem;" data-originaldate="' . $assignment["due"] . '">' . ($assignment["due"] === "" ? "No due date" : ucfirst(displayDatetime($assignment["due"]))) . '</div></div></div>';
       }
       else
       {

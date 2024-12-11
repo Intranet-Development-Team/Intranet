@@ -1,5 +1,5 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Account Settings", "Account");
 if ($current->accessstatus)
@@ -93,7 +93,7 @@ if ($current->accessstatus)
             }
             else
             {
-                $notification = new Notification("Password Changing Failed", "The new password doesn't meet the strength requirements.", "Account Settings", "", "", NotificationType::danger);
+                $notification = new Notification("Password Changing Failed", "The new password doesn't meet the strength require_oncements.", "Account Settings", "", "", NotificationType::danger);
             }
         }
         else

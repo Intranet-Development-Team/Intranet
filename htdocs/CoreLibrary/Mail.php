@@ -1,5 +1,7 @@
 <?php
-require("../CoreLibrary/DatetimeHandlers.php");
+require_once("CoreFunctions.php");
+
+require_once("DatetimeHandlers.php");
 
 if (empty($current))
 {
@@ -28,7 +30,7 @@ class Mail
 
     public function getSummaryMailListItem(string $currentfolder, int $id): string
     {
-        require_once("../CoreLibrary/IMP.php");
+        require_once("/IMP.php");
         $alltousers = [];
         foreach ($this->to as $to)
         {

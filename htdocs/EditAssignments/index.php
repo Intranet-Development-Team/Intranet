@@ -1,9 +1,9 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Assignments", "EditAssignments");
-require("../CoreLibrary/Assignments.php");
-require("../CoreLibrary/DatetimeHandlers.php");
+require_once("../CoreLibrary/Assignments.php");
+require_once("../CoreLibrary/DatetimeHandlers.php");
 
 require_once("../CoreLibrary/IMP.php");
 $IMP = new IMP();
@@ -228,8 +228,7 @@ function array_diff_multidimensional($array1, $array2): array
     $historystored = (array)json_decode(fileread("history.txt"), true);
     if (isset($_GET["history"]) && array_key_exists(((int)$_GET["history"] - 1) * 20, $historystored))
     {
-      echo '<a class="btn me-2" href="?" style="float:left;margin:auto;"><i class="bi bi-arrow-left" style="font-size:1.5em;"></i></a>';
-      echo "<h1>Assignments History</h1><hr>";
+      echo '<h1 class="d-flex"><a class="btn align-self-center me-2" href="?"><i class="bi bi-arrow-left fs-5"></i></a>Assignments History</h1><hr>';
 
       $itemsdisplay = '<div class="accordion">';
       $page = (int)$_GET["history"];
@@ -324,12 +323,12 @@ function array_diff_multidimensional($array1, $array2): array
     }
     else
     {
-      echo '<a class="btn me-2" href="/Assignments" style="float:left;margin:auto;"><i class="bi bi-arrow-left" style="font-size:1.5em;"></i></a>';
+      echo '<h1 class="d-flex"><a class="btn align-self-center me-2" href="/Assignments"><i class="bi bi-arrow-left fs-5"></i></a><span class="flex-fill">Edit Assignments</span>';
       if (!empty($historystored))
       {
-        echo '<a class="btn me-2" href="?history=1" style="float:right;margin:auto;"><i class="bi bi-clock-history" style="font-size:1.5em;"></i></a>';
+        echo '<a class="btn align-self-center me-2" href="?history=1"><i class="bi bi-clock-history fs-5"></i></a>';
       }
-      echo '<h1>Edit Assignments</h1><hr>';
+      echo '</h1><hr>';
 
       if (empty($fails))
       {

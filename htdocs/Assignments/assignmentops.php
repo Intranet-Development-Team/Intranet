@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Assignments", "Assignments");
-require("../CoreLibrary/Assignments.php");
+require_once("../CoreLibrary/Assignments.php");
 
 if ($current->accessstatus)
 {

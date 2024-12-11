@@ -241,11 +241,11 @@ function isURL(string $url): bool
 
 function pathInjectionSecure(string $str): bool
 {
-    if (preg_match('/^([^\\\\\\/]+\\.\\.[^\\\\\\/]?|[^\\\\\\/]?\\.\\.[^\\\\\\/]+)$/', $str))
+    if (str_contains($str, ".."))
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 // Root Exceptions
@@ -549,7 +549,6 @@ class Session extends User
             }
             else if (!is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/electives.txt"))
             {
-                $this->afterallaccessable = false;
                 $this->accessstatus = false;
                 $this->accessstatusmsg = '<div class="vh-100 d-flex align-items-center text-center"><div class="w-100"><h1>Electives Setting Required</h1><h2>You have to set your electives before accessing Intranet.</h2></div></div>';
                 if ($this->currentpage !== "Set Electives" && $this->currentpage !== "Login")

@@ -1,4 +1,6 @@
 <?php
+require_once("CoreFunctions.php");
+
 enum NotificationType: string
 {
     case info = "info";

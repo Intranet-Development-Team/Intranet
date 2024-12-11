@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Calendar", "Calendar");
-require("../CoreLibrary/CalendarEvents.php");
+require_once("../CoreLibrary/CalendarEvents.php");
 ?>
 <!DOCTYPE html>
 <html>

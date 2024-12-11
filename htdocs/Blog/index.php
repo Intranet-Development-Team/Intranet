@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Blog", "Blog");
-require("../CoreLibrary/Blog.php");
+require_once("../CoreLibrary/Blog.php");
 ?>
 <!DOCTYPE html>
 <html>

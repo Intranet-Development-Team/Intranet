@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Mail", "ReplyMail");
-require("../CoreLibrary/Mail.php");
+require_once("../CoreLibrary/Mail.php");
 
 if ($current->accessstatus && isset($_POST["submit"]) && isset($_POST["subject"]) && isset($_POST["content"]) && isset($_GET["folder"]) && isset($_GET["id"]))
 {

@@ -1,10 +1,10 @@
 <?php
-require("CoreLibrary/CoreFunctions.php");
+require_once("CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Home");
 
-require("CoreLibrary/CalendarEvents.php");
-require("CoreLibrary/Assignments.php");
+require_once("CoreLibrary/CalendarEvents.php");
+require_once("CoreLibrary/Assignments.php");
 require_once("CoreLibrary/IMP.php");
 $IMP = new IMP();
 

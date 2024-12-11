@@ -1,5 +1,5 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 function getDevice()
 {
@@ -181,9 +181,9 @@ if (isset($error))
 <?= $current->getHtmlHead() ?>
 
 <body class="bg-body-tertiary m-0">
-  <main class="form-signin" id="pf">
-    <form method="post" enctype="multipart/form-data">
-      <img class="mb-4" src="../Complements/img/icon.png" alt="intranet" width="100" style="  display: block;margin-left: auto;margin-right: auto;">
+  <main class="form-signin">
+    <form method="post" onsubmit="preventMisclick($('#log'))">
+      <img class="mb-4" src="../Complements/img/icon.png" alt="intranet" width="100" style="display: block;margin-left: auto;margin-right: auto;">
       <h1 class="h3 mb-3 fw-normal">
         <p style="text-align:center;"><?= SITE_NAME ?></p>
       </h1>
@@ -200,8 +200,8 @@ if (isset($error))
         <input class="form-check-input" type="checkbox" onclick="spw()" id="showpw">
         <label class="form-check-label" for="showpw">Show password</label>
       </div>
-      <h6 style="color:red;" id="abc"><?= $error ?></h6>
-      <button class="w-100 btn btn-lg btn-primary" name="login" id="log" onclick="load()">Log in</button><br><br>
+      <h6 style="color:red;"><?= $error ?></h6>
+      <button class="w-100 btn btn-lg btn-primary" name="login" id="log">Log in</button><br><br>
       <span class="mt-5 mb-3 text-muted"><small>Site design &copy; Intranet Development Team</small><br><small style="font-size:0.75em;">Logging in means you agree to our <a href="../Conduct">Code of Conduct</a>, <a href="../Copyright">Copyright Policy</a> and <a href="../Privacy">Privacy Policy</a></small></span>
     </form>
   </main>
@@ -213,13 +213,6 @@ if (isset($error))
         x.type = "password";
       } else if (x.type === "password") {
         x.type = "text";
-      }
-    }
-
-    function load() {
-      if (document.getElementById("inputUN").value != "" && document.getElementById("inputPW").value != "") {
-        document.getElementById("log").innerHTML = "Loading...";
-        document.getElementById("abc").innerHTML = "";
       }
     }
   </script>

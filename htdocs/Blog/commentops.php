@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session();
-require("../CoreLibrary/Blog.php");
+require_once("../CoreLibrary/Blog.php");
 
 if ($current->accessstatus && isset($_POST["id"]) && file_exists("../Blog/Blogs/" . $_POST["id"] . ".txt"))
 {

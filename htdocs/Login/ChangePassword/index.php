@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Change Password");
 if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/firstlogin.txt"))
@@ -34,127 +32,14 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
     }
     else
     {
-      $error = "The new password doesn't meet the strength requirements.";
+      $error = "The new password doesn't meet the strength require_oncements.";
     }
   }
 }
 ?>
+<!DOCTYPE html>
+<html>
 <style>
-  .form-signin {
-    text-align: center;
-  }
-
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-  }
-
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-  }
-
-  html,
-  body {
-    overflow-x: hidden;
-    /* Prevent scroll on narrow devices */
-  }
-
-  @media (max-width: 767.98px) {
-    .offcanvas-collapse {
-      position: fixed;
-      top: 56px;
-      /* Height of navbar */
-      bottom: 0;
-      width: 100%;
-      padding-right: 1rem;
-      padding-left: 1rem;
-      overflow-y: auto;
-      background-color: var(--gray-dark);
-      transition: -webkit-transform .3s ease-in-out;
-      transition: transform .3s ease-in-out;
-      transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
-    }
-
-    .offcanvas-collapse.open {
-      -webkit-transform: translateX(-1rem);
-      transform: translateX(-1rem);
-      /* Account for horizontal padding on navbar */
-    }
-  }
-
-  .nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
-  }
-
-  .nav-scroller .nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    color: rgba(255, 255, 255, .75);
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .nav-underline .nav-link {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    font-size: .875rem;
-    color: var(--secondary);
-  }
-
-  .nav-underline .nav-link:hover {
-    color: var(--blue);
-  }
-
-  .nav-underline .active {
-    font-weight: 500;
-    color: var(--gray-dark);
-  }
-
-  .text-white-50 {
-    color: rgba(255, 255, 255, .5);
-  }
-
-  .bg-purple {
-    background-color: var(--purple);
-  }
-
-  .border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-  }
-
-  .lh-100 {
-    line-height: 1;
-  }
-
-  .lh-125 {
-    line-height: 1.25;
-  }
-
-  .lh-150 {
-    line-height: 1.5;
-  }
-
   html,
   body {
     height: 100%;
@@ -169,7 +54,8 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
     display: block;
     margin-left: auto;
     margin-right: auto;
-    min-width: 20%;
+    width: 20em;
+    padding: 15px;
   }
 </style>
 <?= $current->getHtmlHead() ?>
@@ -178,15 +64,17 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
 {
 ?>
 
-  <body class="bg-body-tertiary">
+  <body class="bg-body-tertiary m-0">
     <form method="post" id="logoutcurrent">
       <button type="button" class="btn text-danger" style="position:fixed;top:1em;left:1em;" onclick="confirmModal('Log out?','Are you sure to log out from current device?','$(\'#logoutcurrent\').submit()','Cancel','Log out')"><i class="bi bi-box-arrow-right"></i> Log out</button>
       <input type="hidden" name="logout">
     </form>
-    <main class="form-signin" id="pf">
-      <h1>Hi, <?= $current->username ?>.</h1>
-      <h5 style="padding-top:0.2em;padding-bottom:0.2em;">This is your first login.</h5>
-      <h6>To protect your account,<br>please change your password below:</h6><br>
+    <main class="form-signin">
+      <div class="text-center mb-3">
+        <h1>Hi, <?= $current->username ?>.</h1>
+        <h5>This is your first login.</h5>
+        <h6 class="text-muted">To protect your account,<br>please change your password below:</h6>
+      </div>
       <form method="post" enctype="multipart/form-data">
         <div class="form-floating mb-1">
           <input type="password" class="form-control" id="password" name="password" placeholder="New password" onkeyup="showHint(this.value)" autofocus required>

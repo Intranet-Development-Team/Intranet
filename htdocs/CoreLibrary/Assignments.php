@@ -1,4 +1,6 @@
 <?php
+require_once("CoreFunctions.php");
+
 function getAllAssignments(bool $forediting = false): array
 {
     if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Assignments/assignments.txt"))

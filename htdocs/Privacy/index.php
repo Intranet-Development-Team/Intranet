@@ -1,5 +1,5 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Privacy", "Privacy", USER_LIST, false);
 ?>
@@ -23,7 +23,7 @@ $current = new Session("Privacy", "Privacy", USER_LIST, false);
   <br>
   <p><b>2. Data protection</b></p>
   <p>Our server is equipped with necessary security protection measures to protect the website and your personal data. We also take data security as the first consideration in our development. Strict protection measures are adopted, and only authorized personnel can access your data.</p>
-  <p>If it is necessary to entrust other units to provide services, we will also strictly require them to comply with confidentiality obligations and take necessary inspection procedures to ensure that they will indeed comply.</p>
+  <p>If it is necessary to entrust other units to provide services, we will also strictly require_once them to comply with confidentiality obligations and take necessary inspection procedures to ensure that they will indeed comply.</p>
   <br>
   <p><b>3. Policy on sharing personal data with third parties</b></p>
   <p></p>Intranet will never provide, exchange, rent or sell any of your personal information to other individuals, groups, private companies or public agencies, but those with legal basis or contractual obligations are not limited to this.</p>

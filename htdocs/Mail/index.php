@@ -1,8 +1,8 @@
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Mail", "Mail");
-require("../CoreLibrary/Mail.php");
+require_once("../CoreLibrary/Mail.php");
 
 if ($current->accessstatus && !empty($_GET) && !empty($_POST))
 {

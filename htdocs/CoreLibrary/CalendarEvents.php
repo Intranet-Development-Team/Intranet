@@ -1,5 +1,7 @@
 <?php
-require("DatetimeHandlers.php");
+require_once("CoreFunctions.php");
+
+require_once("DatetimeHandlers.php");
 
 function getAllEvents(bool $includebdays = true, bool $forediting = false): array
 {

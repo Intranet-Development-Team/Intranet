@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
 <?php
-require("../CoreLibrary/CoreFunctions.php");
+require_once("../CoreLibrary/CoreFunctions.php");
 
 $current = new Session("Calendar", "EditCalendarEvents");
 
-require("../CoreLibrary/CalendarEvents.php");
+require_once("../CoreLibrary/CalendarEvents.php");
 
 require_once("../CoreLibrary/IMP.php");
 $IMP = new IMP();
@@ -213,155 +211,20 @@ function array_diff_multidimensional($array1, $array2): array
   return $difference;
 }
 ?>
-<style>
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-
-  .dropdown-content a:hover {
-    background-color: #f1f1f1
-  }
-
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-  }
-
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-  }
-
-  html,
-  body {
-    overflow-x: hidden;
-    /* Prevent scroll on narrow devices */
-  }
-
-  body {
-    padding-top: 3rem;
-  }
-
-  @media (max-width: 767.98px) {
-    .offcanvas-collapse {
-      position: fixed;
-      top: 56px;
-      /* Height of navbar */
-      bottom: 0;
-      width: 100%;
-      padding-right: 1rem;
-      padding-left: 1rem;
-      overflow-y: auto;
-      background-color: var(--gray-dark);
-      transition: -webkit-transform .3s ease-in-out;
-      transition: transform .3s ease-in-out;
-      transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
-    }
-
-    .offcanvas-collapse.open {
-      -webkit-transform: translateX(-1rem);
-      transform: translateX(-1rem);
-      /* Account for horizontal padding on navbar */
-    }
-  }
-
-  .nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
-  }
-
-  .nav-scroller .nav {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    color: rgba(255, 255, 255, .75);
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .nav-underline .nav-link {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    font-size: .875rem;
-    color: var(--secondary);
-  }
-
-  .nav-underline .nav-link:hover {
-    color: var(--blue);
-  }
-
-  .nav-underline .active {
-    font-weight: 500;
-    color: var(--gray-dark);
-  }
-
-  textarea:focus {
-    z-index: +1;
-    position: relative;
-  }
-
-  .red {
-    color: #dc3545 !important;
-  }
-
-  .red:hover {
-    background-color: #dc3545 !important;
-    color: white !important;
-  }
-
-  .red:active {
-    background-color: #dc3545 !important;
-    color: white !important;
-  }
-</style>
+<!DOCTYPE html>
+<html>
 <?= $current->getHtmlHead() ?>
 
-<body class="container">
+<body class="container pt-4">
   <header><?= $current->getNavBar() ?></header>
-  <br>
   <?php
   if ($current->accessstatus)
   {
     $historystored = (array)json_decode(fileread("history.txt"), true);
     if (isset($_GET["history"]) && array_key_exists(((int)$_GET["history"] - 1) * 20, $historystored))
     {
-      echo '<a class="btn me-2" href="?" style="float:left;margin:auto;"><i class="bi bi-arrow-left" style="font-size:1.5em;"></i></a>';
-      echo "<h1>Calendar Events History</h1><hr>";
+      echo '<h1 class="d-flex"><a class="btn align-self-center me-2" href="?"><i class="bi bi-arrow-left fs-5"></i></a>Calendar Events History</h1><hr>';
+
 
       $itemsdisplay = '<div class="accordion">';
       $page = (int)$_GET["history"];
@@ -456,12 +319,12 @@ function array_diff_multidimensional($array1, $array2): array
     }
     else
     {
-      echo '<a class="btn me-2" href="/Calendar" style="float:left;margin:auto;"><i class="bi bi-arrow-left" style="font-size:1.5em;"></i></a>';
-      if (!empty($historystored))
-      {
-        echo '<a class="btn me-2" href="?history=1" style="float:right;margin:auto;"><i class="bi bi-clock-history" style="font-size:1.5em;"></i></a>';
-      }
-      echo '<h1>Edit Calendar Events</h1><hr>';
+      echo '<h1 class="d-flex"><a class="btn align-self-center me-2" href="/Calendar"><i class="bi bi-arrow-left fs-5"></i></a><span class="flex-fill">Edit Calendar Events</span>';
+        if (!empty($historystored))
+        {
+          echo '<a class="btn align-self-center me-2" href="?history=1"><i class="bi bi-clock-history fs-5"></i></a>';
+        }
+        echo '</h1><hr>';
       if (empty($fails))
       {
         if (isset($_GET["revertedit"]) && count($historystored) - 1 > $_GET["revertedit"])
