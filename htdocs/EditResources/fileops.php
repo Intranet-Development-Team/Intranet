@@ -10,7 +10,7 @@ if ($current->accessstatus)
         $targetfilepath = "../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"];
         if (isset($_GET["rename"]) && file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"]))
         {
-            $_POST["newfilename"] = trim($_POST["newfilename"]);
+            $_POST["newfilename"] = $_POST["newfilename"];
             $newfilename = $_POST["newfilename"];
             $extension = pathinfo($_POST["filename"])["extension"] ?? "";
             if (preg_match('/[^a-zA-Z0-9_ \\(\\)]/', $newfilename) === 0 && strlen($newfilename + (!empty($extension) ? "." . $extension : "")) <= 64 && $newfilename != pathinfo($_POST["filename"])["filename"])
@@ -56,7 +56,7 @@ if ($current->accessstatus)
         {
             if (is_dir($targetfilepath))
             {
-                $_POST["newfoldername"] = trim($_POST["newfoldername"]);
+                $_POST["newfoldername"] = $_POST["newfoldername"];
                 $newfoldername = $_POST["newfoldername"];
                 if (preg_match('/[^a-zA-Z0-9_ \\(\\)]/', $newfoldername) === 0 && strlen($newfoldername) <= 64)
                 {
