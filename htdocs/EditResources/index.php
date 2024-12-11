@@ -685,7 +685,7 @@ function getDisplayLinks()
             data: "filename=" + encodeURIComponent($("#renamefileordiralert-filefullname").html()) + "&newfilename=" + encodeURIComponent($("#renamefileordiralert-filebasename").val()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = '<div class="alert alert-danger fade show shadow" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" style="float:right;"></button><h5 class="alert-heading">File Operation Failed</h5><p style="word-break: break-word;">' + html + '</p></div>' + document.getElementById("notificationcontainer").innerHTML;
+                document.getElementById("notificationcontainer").innerHTML = html;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -737,7 +737,7 @@ function getDisplayLinks()
             data: "filename=" + encodeURIComponent($("#deletefileordiralert-filefullname").html()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = '<div class="alert alert-danger fade show shadow" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" style="float:right;"></button><h5 class="alert-heading">File Operation Failed</h5><p style="word-break: break-word;">' + html + '</p></div>' + document.getElementById("notificationcontainer").innerHTML;
+                document.getElementById("notificationcontainer").innerHTML = html;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -800,7 +800,7 @@ function getDisplayLinks()
             data: "newfoldername=" + encodeURIComponent($("#newfolderalert-foldername").val()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = '<div class="alert alert-danger fade show shadow" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" style="float:right;"></button><h5 class="alert-heading">File Operation Failed</h5><p style="word-break: break-word;">' + html + '</p></div>' + document.getElementById("notificationcontainer").innerHTML;
+                document.getElementById("notificationcontainer").innerHTML = html;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -870,7 +870,7 @@ function getDisplayLinks()
             contentType: false,
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = '<div class="alert alert-danger fade show shadow" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" style="float:right;"></button><h5 class="alert-heading">File Operation Failed</h5><p style="word-break: break-word;">' + html + '</p></div>' + document.getElementById("notificationcontainer").innerHTML;
+                document.getElementById("notificationcontainer").innerHTML = html;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",

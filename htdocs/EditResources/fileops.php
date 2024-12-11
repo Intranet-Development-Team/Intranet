@@ -25,7 +25,7 @@ if ($current->accessstatus)
             }
             else
             {
-                echo "File renaming failed. Please try again.";
+                echo (new Notification("File Operation Failed", "File renaming failed. Please try again.", "Resources"))->getPushNotificationDisplay();
             }
         }
         else if (isset($_GET["delete"]) && file_exists("../Resources/Resources Files/FILES/" . $_GET["filepath"] . $_POST["filename"]))
@@ -70,12 +70,12 @@ if ($current->accessstatus)
                 }
                 else
                 {
-                    echo "Folder creation failed. Please try again.";
+                    echo (new Notification("File Operation Failed", "Folder creation failed. Please try again.", "Resources"))->getPushNotificationDisplay();
                 }
             }
             else
             {
-                echo "Folder creation failed. Please try again.";
+                echo (new Notification("File Operation Failed", "Folder creation failed. Please try again.", "Resources"))->getPushNotificationDisplay();
             }
         }
         else if (isset($_GET["newfileupload"]) && is_dir("../Resources/Resources Files/FILES/" . $_GET["filepath"]))
@@ -102,13 +102,13 @@ if ($current->accessstatus)
                     }
                     else
                     {
-                        echo "File upload failed. Please try again.";
+                        echo (new Notification("File Operation Failed", "File upload failed. Please try again.", "Resources"))->getPushNotificationDisplay();
                     }
                 }
             }
             else
             {
-                echo "File upload failed. Please try again.";
+                echo (new Notification("File Operation Failed", "File upload failed. Please try again.", "Resources"))->getPushNotificationDisplay();
             }
         }
     }
