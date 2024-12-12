@@ -21,7 +21,7 @@ The below configurations are not required but can be set to enhance the server.
 ### Download
 The code inside `htdocs` is almost ready to use on PHP servers: Firstly, simply download the content in `htdocs` to your webroot or clone the repository. Then, change the `SITE_DOMAIN` constant in `CoreLibrary/CoreFunctions.php` to the domain of your site.
 
-You may also update your site's icon at `Complements/img/icon.png`
+You may also update your site's icon at `Complements/img/icon.png`.
 ## Fundamentals
 ### Core
 Files in `CoreLibrary` are used to include and not being run from web request. 
