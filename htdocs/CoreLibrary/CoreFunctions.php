@@ -179,7 +179,6 @@ function fileread(string $filename): bool|string
     {
         clearstatcache();
         $filesize = filesize($filename);
-        clearstatcache();
         $file = fopen($filename, "r");
         if (flock($file, LOCK_EX | LOCK_NB))
         {
