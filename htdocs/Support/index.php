@@ -302,7 +302,7 @@ if ($current->accessstatus)
          <br>
          <hr>
          <h5 style="text-align:center;line-height:1.5em;">
-            Version 3.1<br>Built with Bootstrap (v5.3) framework<br>Released on 08/12/2024<br><br>Site design &copy; Intranet Development Team<br>
+            Version 3.1<br>Released on 08/12/2024<br><br>Site design &copy; Intranet Development Team<br>
             <p>All rights reserved</p><br>
             <h6 style="text-align:center;line-height:1.5em;">Members of Intranet Development Team<br>Henry Chan<br></h6>
          </h5>
