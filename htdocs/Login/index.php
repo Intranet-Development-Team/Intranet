@@ -196,7 +196,7 @@ if (isset($error))
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
         <label for="inputPassword">Password</label>
       </div>
-      <div class="form-check" style="margin:0.25em;">
+      <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" onclick="spw()" id="showpw">
         <label class="form-check-label" for="showpw">Show password</label>
       </div>

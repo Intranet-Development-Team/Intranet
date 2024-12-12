@@ -86,7 +86,7 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
           <label for="confirmpassword">Confirm new password</label>
         </div>
         <p id="hint2" style="text-align:left;font-size:0.75em;margin-top:0.2em;color:red;"><?= $error ?? "" ?></p>
-        <div class="form-check" style="text-align:left;">
+        <div class="form-check mb-3">
           <input class="form-check-input" type="checkbox" onclick="spw()" id="spch">
           <label class="form-check-label" for="spch">Show passwords</label>
         </div>

@@ -331,6 +331,9 @@ class User
     {
         $pfp = imagecreatefromstring(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/pfp.txt"));
         $pfp = imagescale($pfp, $size, $size);
+        ob_start();
+        imagepng($pfp);
+        $pfp = ob_get_clean();
         return "data:image/png;base64," . base64_encode($pfp);
     }
 
