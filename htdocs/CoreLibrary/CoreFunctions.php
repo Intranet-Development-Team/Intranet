@@ -330,7 +330,7 @@ class User
 
     public function getpfp(int $size = 75): string
     {
-        $pfp = imagecreatefromstring(base64_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/pfp.txt")));
+        $pfp = imagecreatefromstring(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/pfp.txt"));
         $pfp = imagescale($pfp, $size, $size);
         ob_start();
         imagepng($pfp);
