@@ -332,9 +332,6 @@ class User
     {
         $pfp = imagecreatefromstring(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/pfp.txt"));
         $pfp = imagescale($pfp, $size, $size);
-        ob_start();
-        imagepng($pfp);
-        $pfp = ob_get_clean();
         return "data:image/png;base64," . base64_encode($pfp);
     }
 
@@ -633,7 +630,7 @@ class Session extends User
     public function getHtmlHead(): string
     {
         return '<head><meta name="viewport" content="width=device-width, initial-scale=1"><noscript>
-        <meta http-equiv="refresh" content="0; url=https://' . SITE_DOMAIN . '/jsdisabled.html"></noscript><link rel="stylesheet" href="/Complements/core.css"><link rel="stylesheet" href="/Complements/Bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="/Complements/Bootstrap/icons/font/bootstrap-icons.css"><script type="text/javascript" src="/Complements/Bootstrap/js/bootstrap.bundle.min.js"></script><script type="text/javascript" src="/Complements/jQuery/jquery.js"></script><script type="text/javascript" src="/Complements/core.js"></script><link rel="icon" href="/Complements/img/icon.png"><title>' . $this->currentpage . ' | ' . SITE_NAME . '</title></head>';
+        <meta http-equiv="refresh" content="0; url=https://' . SITE_DOMAIN . '/jsdisabled.html"></noscript><link rel="stylesheet" href="/Complements/core.css"><link rel="stylesheet" href="/Complements/Bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="/Complements/Bootstrap/icons/font/bootstrap-icons.min.css"><script type="text/javascript" src="/Complements/Bootstrap/js/bootstrap.bundle.min.js"></script><script type="text/javascript" src="/Complements/jQuery/jquery.js"></script><script type="text/javascript" src="/Complements/core.js"></script><link rel="icon" href="/Complements/img/icon.png"><title>' . $this->currentpage . ' | ' . SITE_NAME . '</title></head>';
     }
 
     public function getFooter(): string
