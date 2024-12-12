@@ -46,9 +46,9 @@ if ($current->accessstatus)
                     $image = imagescale($image, 200, 200);
                     ob_start();
                     imagepng($image);
-                    $imgbase64 = base64_encode(ob_get_clean());
+                    $imgdata = ob_get_clean();
                     imagedestroy($image);
-                    $current->setpfp($imgbase64);
+                    $current->setpfp($imgdata);
                     $notification = new Notification("Profile Picture Upload Succeeded", "Your profile picture has been updated.", "Account Settings", "", "", NotificationType::success);
                 }
                 else
