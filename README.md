@@ -12,7 +12,7 @@ Intranet is an online information exchange platform for students.
 ### Requirements
 - PHP Version >= 8.0
 - Extension GD enabled
-> Note that `https` is required by default. Set in root `.htaccess`.
+> Note that `https` is required by default. Set in root `.htaccess`. Delete it if you do not have TLS/SSL.
 #### Recommended PHP Configuration
 The below configurations are not required but can be set to enhance the server.
 - Memory size: `memory_limit = 8M`
@@ -20,4 +20,18 @@ The below configurations are not required but can be set to enhance the server.
 - Php upload limit: `upload_max_filesize = 10M`
 ### Download
 The code inside `htdocs` is almost ready to use on PHP servers: Firstly, simply download the content in `htdocs` to your webroot or clone the repository. Then, change the `SITE_DOMAIN` constant in `CoreLibrary/CoreFunctions.php` to the domain of your site.
+
+You may also update your site's icon at `Complements/img/icon.png`
 ## Fundamentals
+### Core
+Files in `CoreLibrary` are used to include and not being run from web request. 
+
+`CoreFunctions.php` is the core of Intranet, containing the error handling system, user system and some core functions. It should be generally included in all pages that accept web requests. When a user is logged in, a `Session` object can be created and used to carry out user and session actions.
+### User
+Users are stored under `Login/Accounts/`. Each directory represents a user with its name representing the username. Initially, only three files: `password.txt`, `role.txt` and `pfp.txt` are present and storing the *SHA3-512 hashed password*, *JSON-encoded roles* and `profile picture`.
+
+Upon first login, `firstlogin.txt` will be created after user changing their password. Then, `birthday.txt` and `electives.txt` are created after user setting their birthday and elective subjects.
+
+Files like `notifications.txt` will be created by the system with its first push notification. Directories like `Drafts`, `Mails` are alike.
+### Frontend
+The frontend is designed and programmed with Bootstrap 5.3, Bootstrap Icons 1.11.3, jQuery 3.6.4 and jQuery UI 1.13.2.
