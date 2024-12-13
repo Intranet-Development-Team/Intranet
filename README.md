@@ -33,6 +33,8 @@ Users are stored under `Login/Accounts/`. Each directory represents a user with 
 Upon first login, `firstlogin.txt` will be created after user changing their password. Then, `birthday.txt` and `electives.txt` are created after user setting their birthday and elective subjects.
 
 Files like `notifications.txt` will be created by the system with its first push notification. Directories like `Drafts`, `Logins`, `Mails` are alike.
+
+After starting the operation of Intranet, you should not delete any user as it may cause the system to throw `UnknownUsernameException` while reading content.
 ### Storage
 Most preset `.txt` files storing the content of Intranet can be initially empty. Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty may result in error.
 ### Frontend
