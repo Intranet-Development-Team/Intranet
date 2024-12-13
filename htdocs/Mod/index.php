@@ -29,7 +29,8 @@ if ($current->accessstatus)
         {
             $notification = new Notification("Account Suspension Failed", "The user <b>" . $taruser->username . "</b> does not exist.", "Mod", "", "", NotificationType::danger);
         }
-        $instantPushNotifications[] = $notification;
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification($notification);
     }
     else if (isset($_POST['changeuserpw_submit']) && isset($_POST['changeuserpw_targetuser']) && isset($_POST['changeuserpw_newpassword']) && isset($_POST['changeuserpw_ownpassword']))
     {
@@ -54,7 +55,8 @@ if ($current->accessstatus)
         {
             $notification = new Notification("Password Changing Failed", "The user <b>" . $taruser->username . "</b> does not exist.", "Mod", "", "", NotificationType::danger);
         }
-        $instantPushNotifications[] = $notification;
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification($notification);
     }
 }
 ?>

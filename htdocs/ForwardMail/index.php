@@ -28,7 +28,8 @@ if ($current->accessstatus && isset($_POST["submit"]) && isset($_POST["to"]) && 
         }
         catch (UnknownUsernameException $e)
         {
-            $instantPushNotifications[] = new Notification("Mail Sending Failed", "The user <i>" . $e->getMessage() . "</i> doesn't exist.", "Mail", "", "", NotificationType::danger);
+            $notificationOperator = new NotificationSystemOperator();
+            $notificationOperator->addInstantPushNotification(new Notification("Mail Sending Failed", "The user <i>" . $e->getMessage() . "</i> doesn't exist.", "Mail", "", "", NotificationType::danger));
         }
     }
 }

@@ -92,12 +92,13 @@ class Notification
     }
 }
 
-$instantPushNotifications = [];
+
 
 class NotificationSystemOperator
 {
-    public array $allNotifications;
-    public array $onloadDetectionNotifications; // Cannot be pushed, in current dev state
+    private array $allNotifications;
+    private array $onloadDetectionNotifications; // Cannot be pushed, in current dev state
+    private array $instantPushNotifications;
 
     public function __construct()
     {
@@ -139,6 +140,11 @@ class NotificationSystemOperator
         }
     }
 
+    public function addInstantPushNotification(Notification $notification): void
+    {
+        array_unshift($this->instantPushNotifications, $notification);
+    }
+
     public function getAllPushNotificationsDisplay(): string
     {
         $html = "";
@@ -153,8 +159,7 @@ class NotificationSystemOperator
             }
         }
 
-        global $instantPushNotifications;
-        foreach ((array)$instantPushNotifications as &$notification)
+        foreach ($this->instantPushNotifications as $notification)
         {
             $html .= $notification->getPushNotificationDisplay();
         }

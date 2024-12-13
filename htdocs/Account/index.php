@@ -19,7 +19,8 @@ if ($current->accessstatus)
                     $devicedetail = json_decode(fileread("../Login/Accounts/" . $current->username  . "/Logins/" . $filename), true);
                     unlink("../Login/Accounts/" . $current->username  . "/Logins/" . $filename);
                     $notification = new Notification("Device Logged out", "Your " . $devicedetail["device"] . " has been logged out.", "Account Settings", "", "", NotificationType::success);
-                    $instantPushNotifications[] = $notification;
+                    $notificationOperator = new NotificationSystemOperator();
+                    $notificationOperator->addInstantPushNotification($notification);
                 }
             }
         }
@@ -65,7 +66,8 @@ if ($current->accessstatus)
         {
             $notification = new Notification("Profile Picture Upload Failed", "The image file you have uploaded is too large (> 3 MB).", "Account Settings", "", "", NotificationType::danger);
         }
-        $instantPushNotifications[] = $notification;
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification($notification);
     }
     else if (isset($_POST["changepwsubmit"]) && isset($_POST["oldpassword"]) && isset($_POST["newpassword"]) && isset($_POST["newpasswordconfirm"]))
     {
@@ -100,7 +102,8 @@ if ($current->accessstatus)
         {
             $notification = new Notification("Password Changing Failed", "The old password doesn't match.", "Account Settings", "", "", NotificationType::danger);
         }
-        $instantPushNotifications[] = $notification;
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification($notification);
     }
     else if (isset($_POST["changebdaysubmit"]) && isset($_POST["birthday"]))
     {
@@ -114,7 +117,8 @@ if ($current->accessstatus)
         {
             $notification = new Notification("Birthday Changing Failed", "Please enter a valid date.", "Account Settings", "", "", NotificationType::danger);
         }
-        $instantPushNotifications[] = $notification;
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification($notification);
     }
 }
 ?>
