@@ -685,7 +685,7 @@ function getDisplayLinks()
             data: "filename=" + encodeURIComponent($("#renamefileordiralert-filefullname").html()) + "&newfilename=" + encodeURIComponent($("#renamefileordiralert-filebasename").val()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = html;
+                document.getElementById("notificationcontainer").innerHTML = html + document.getElementById("notificationcontainer").innerHTML;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -737,7 +737,7 @@ function getDisplayLinks()
             data: "filename=" + encodeURIComponent($("#deletefileordiralert-filefullname").html()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = html;
+                document.getElementById("notificationcontainer").innerHTML = html + document.getElementById("notificationcontainer").innerHTML;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -800,7 +800,7 @@ function getDisplayLinks()
             data: "newfoldername=" + encodeURIComponent($("#newfolderalert-foldername").val()),
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = html;
+                document.getElementById("notificationcontainer").innerHTML = html + document.getElementById("notificationcontainer").innerHTML;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
@@ -870,7 +870,7 @@ function getDisplayLinks()
             contentType: false,
             success: function(html) {
               if (html != "") {
-                document.getElementById("notificationcontainer").innerHTML = html;
+                document.getElementById("notificationcontainer").innerHTML = html + document.getElementById("notificationcontainer").innerHTML;
               }
               $.ajax({
                 url: "../Resources/scandir.php?",
