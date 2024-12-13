@@ -10,7 +10,10 @@ if (empty($current))
 
 class Mail
 {
-    public $subject, $from, $to, $content, $time, $read, $star;
+    public string $subject, $content, $time;
+    public User $from;
+    public array $to;
+    public bool $read, $star;
 
     public function __construct(string $subject, string $from, array $tos, string $content, string $time, bool $read = false, bool $star = false)
     {

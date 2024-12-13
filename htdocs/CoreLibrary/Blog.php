@@ -15,11 +15,14 @@ visibility_type: include, exclude
 
 class Blog
 {
-    public $author, $title, $content, $time, $edittime, $likes, $comments, $visibility;
+    public User $author;
+    public string $title, $content, $time;
+    public ?string $edittime;
+    public array $likes, $comments;
+    public ?array $visibility;
 
-    public function __construct(string $author, string $title, string $content, string $time, string|null $edittime, array $likes, array $comments, string $visibility, string|null $visibility_type = null, array|null $visibility_targetusers = null)
+    public function __construct(string $author, string $title, string $content, string $time, ?string $edittime, array $likes, array $comments, string $visibility, ?string $visibility_type = null, ?array $visibility_targetusers = null)
     {
-        global $current;
         $this->author = new User($author);
         $this->title = $title;
         $this->content = $content;

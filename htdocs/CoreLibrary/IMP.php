@@ -3,21 +3,20 @@ class IMP
 {
     ## Settings ##
 
-    private $autoURL = true,
-        $linkNewTab = true,
-        $allowedLinks = [
-            'https?:\/\/',
-            'ftps?:\/\/',
-            'mailto:',
-            'tel:',
-            'data:image\/(?:png|gif|jpeg);base64,',
-            'irc:',
-            'ircs:',
-            'git:',
-            'ssh:',
-            'news:',
-            'steam:',
-        ];
+    private bool $autoURL = true, $linkNewTab = true;
+    private array $allowedLinks = [
+        'https?:\/\/',
+        'ftps?:\/\/',
+        'mailto:',
+        'tel:',
+        'data:image\/(?:png|gif|jpeg);base64,',
+        'irc:',
+        'ircs:',
+        'git:',
+        'ssh:',
+        'news:',
+        'steam:',
+    ];
 
     public function setAutoUrl(bool $auto): void
     {
