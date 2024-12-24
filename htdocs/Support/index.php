@@ -250,7 +250,7 @@ if ($current->accessstatus)
          <h1>Feedback</h1>
          <h6>We would love to hear your thoughts on how we can improve your experience.</h6>
          <br>
-         <form method="post" enctype="multipart/form-data">
+         <form method="post" enctype="multipart/form-data" onsubmit="preventMisclick($('#feedbacksubmitbtn'))">
             <input type="text" class="form-control form-control-lg" placeholder="Descriptive title" name="feedbacktitle" required> <br>
             <h5>Select a feedback type:</h5>
             <select class="form-select" name="feedbacktype" required>
@@ -266,7 +266,7 @@ if ($current->accessstatus)
             <textarea class="form-control" style="min-height:15em;" name="feedback" required></textarea>
             <br>
             <h5>Additional picture description(if needed):</h5>
-            <input type="file" name="feedbackadditpic" accept="image/*" class="form-control"> <br><br><button type="submit" class="btn btn-primary">Submit</button>
+            <input type="file" name="feedbackadditpic" accept="image/*" class="form-control"> <br><br><button type="submit" class="btn btn-primary" id="feedbacksubmitbtn">Submit</button>
          </form>
       <?php
       }
@@ -277,7 +277,7 @@ if ($current->accessstatus)
          <h1>Report abuse</h1>
          <h6>Help all the users use Intranet more freely, confidently, equally and productively.</h6>
          <br>
-         <form method="post" enctype="multipart/form-data">
+         <form method="post" enctype="multipart/form-data" nsubmit="preventMisclick($('#reportsubmitbtn'))>
             <input type="text" class="form-control form-control-lg" placeholder="Descriptive title" name="abusetitle" required> <br>
             <h5>Basic information of the incident:</h5>
             <input type="text" class="form-control" placeholder="When did the incident happen?" name="when" required> <br><input type="text" class="form-control" placeholder="Who is/are involved in the incident?" name="who" required> <br><input type="text" class="form-control" placeholder="Where (Which page(s) on Intranet) did the incident happen?" name="where" required> <br>
@@ -285,7 +285,7 @@ if ($current->accessstatus)
             <textarea class="form-control" name="abusedescription" style="resize:vertical;min-height:20em;" required></textarea>
             <br>
             <h5>Screen capture evidence:</h5>
-            <input type="file" name="abuseevidence" accept="image/*" class="form-control" required> <br><br><button type="submit" class="btn btn-primary">Submit</button>
+            <input type="file" name="abuseevidence" accept="image/*" class="form-control" required> <br><br><button type="submit" class="btn btn-primary" id="reportsubmitbtn">Submit</button>
          </form>
       <?php
       }
