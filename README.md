@@ -24,18 +24,18 @@ The code inside `htdocs` is almost ready to use on PHP servers: Firstly, simply 
 You may also update your site's name at `SITE_NAME` constant in `CoreLibrary/CoreFunctions.php` and icon at `Complements/img/icon.png`.
 ## Fundamentals
 ### Core
-Files in `CoreLibrary` are used to include and not being run from web request. 
+Files in `CoreLibrary` are used to include and not being run from web requests. 
 
 `CoreFunctions.php` is the core of Intranet, containing the error handling system, user system and some core functions. It should be generally included in all pages that accept web requests. When a user is logged in, a `Session` object can be created and used to carry out user and session actions.
 ### User
 Users are stored under `Login/Accounts/`. Each directory represents a user with its name representing the username. Initially, only three files: `password.txt`, `role.txt` and `pfp.txt` are present and storing the *SHA3-512 hashed password*, *JSON-encoded roles* and *profile picture*.
 
-Upon first login, `firstlogin.txt` will be created after user changing their password. Then, `birthday.txt` and `electives.txt` are created after user setting their birthday and elective subjects.
+Upon the first login, `firstlogin.txt` will be created after the user changes their password. Then, `birthday.txt` and `electives.txt` are created after user setting their birthday and elective subjects.
 
 Files like `notifications.txt` will be created by the system with its first push notification. Directories like `Drafts`, `Logins`, `Mails` are alike.
 
 After starting the operation of Intranet, you should not delete any user as it may cause the system to throw `UnknownUsernameException` while reading content.
 ### Storage
-Most preset `.txt` files storing the content of Intranet can be initially empty. Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty may result in error.
+Most preset `.txt` files storing the content of Intranet can be initially empty (0 in length). Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty may result in error.
 ### Frontend
 The frontend is designed and programmed with Bootstrap 5.3, Bootstrap Icons 1.11.3, jQuery 3.6.4 and jQuery UI 1.13.2.
