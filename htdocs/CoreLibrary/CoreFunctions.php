@@ -179,8 +179,9 @@ function fileread(string $filename): bool|string
     {
         clearstatcache();
         $filesize = filesize($filename);
+        clearstatcache();
         $file = fopen($filename, "r");
-        if (flock($file, LOCK_EX | LOCK_NB))
+        if (flock($file, LOCK_SH | LOCK_NB))
         {
             $fcontents = ($filesize > 0 ? fread($file, $filesize) : "");
             fclose($file);
@@ -191,7 +192,7 @@ function fileread(string $filename): bool|string
             for ($trials = 1; $trials <= 100; $trials++)
             {
                 usleep(100000);
-                if (flock($file, LOCK_EX | LOCK_NB))
+                if (flock($file, LOCK_SH | LOCK_NB))
                 {
                     $fcontents = ($filesize > 0 ? fread($file, $filesize) : "");
                     fclose($file);
