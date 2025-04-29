@@ -14,13 +14,13 @@ register_shutdown_function("shutdownHandler");
 function shutdownHandler(): void
 {
     $error = error_get_last();
-    if ($error)
+    if (isset($error["type"]) && in_array($error["type"], [E_CORE_ERROR, E_ERROR, E_USER_ERROR, E_COMPILE_ERROR, E_PARSE], true))
     {
         errorHandler($error['type'], $error["message"], $error["file"], $error["line"]);
     }
 }
 
-function errorHandler(int $errno, string $errstr, string $errfile, int $errline)
+function errorHandler(int $errno, string $errstr, string $errfile, int $errline): bool
 {
     $errstr = nl2br(htmlspecialchars($errstr));
     $errmsg = "";
