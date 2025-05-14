@@ -19,7 +19,7 @@ class Blog
     public string $title, $content, $time;
     public ?string $edittime;
     public array $likes, $comments;
-    public ?array $visibility;
+    public string $visibility;
 
     public function __construct(string $author, string $title, string $content, string $time, ?string $edittime, array $likes, array $comments, string $visibility, ?string $visibility_type = null, ?array $visibility_targetusers = null)
     {
