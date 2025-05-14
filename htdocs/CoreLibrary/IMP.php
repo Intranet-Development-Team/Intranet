@@ -40,7 +40,7 @@ class IMP
 
     public function text(string $str): string
     {
-        $str = preg_replace('/\r(?!\n)|\r\n/', "\n", $str); // Unify line breaks indicators
+        $str = preg_replace('/\r\n|\r/', "\n", $str); // Unify line breaks indicators
         $str = preg_replace('/\t/', "    ", $str); // Unify spacers
         $str = htmlspecialchars($str, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, null, false); // Escape HTML
 
