@@ -576,7 +576,7 @@ class Session extends User
 
             if ($this->loginstatus)
             {
-                if (isset($pageNotificationCount[$name]))
+                if (isset($pageNotificationCount[$name]) && $this->currentpage !== $name)
                 {
                     $badge = '<span class="badge bg-danger rounded-pill ms-2 align-self-center" style="font-size:.6rem;">' . $pageNotificationCount[$name] . '</span>';
                 }
