@@ -58,6 +58,15 @@ if ($current->accessstatus)
         $notificationOperator = new NotificationSystemOperator();
         $notificationOperator->addInstantPushNotification($notification);
     }
+    else if (isset($_POST['pushnotification_content']) && isset($_POST['pushnotification_submit']))
+    {
+        require_once("../CoreLibrary/IMP.php");
+        $notification = new Notification("Message from Moderator", (new IMP())->line($_POST['pushnotification_content']), "");
+        $notification->push(USER_LIST);
+
+        $notificationOperator = new NotificationSystemOperator();
+        $notificationOperator->addInstantPushNotification(new Notification("Notification Push Succeeded", "All users have received the notification.", "Mod", "", "", NotificationType::success));
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -70,7 +79,7 @@ if ($current->accessstatus)
     if ($current->accessstatus)
     {
         echo '<h1>Mod Console</h1><hr>';
-        echo '<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link' . (!(isset($_GET["reportedabuse"]) || isset($_GET["changeuserpw"])) ? ' active" href="#"' : '" href="?"') . '>Suspend account</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["reportedabuse"]) ? ' active" href="#"' : '" href="?reportedabuse"') . '>Reported abuses</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["changeuserpw"]) ? ' active" href="#"' : '" href="?changeuserpw"') . '>Change user\'s password</a></li></ul>';
+        echo '<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link' . (!(isset($_GET["reportedabuse"]) || isset($_GET["changeuserpw"])) ? ' active" href="#"' : '" href="?"') . '>Suspend account</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["reportedabuse"]) ? ' active" href="#"' : '" href="?reportedabuse"') . '>Reported abuses</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["changeuserpw"]) ? ' active" href="#"' : '" href="?changeuserpw"') . '>Change user\'s password</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["pushnotification"]) ? ' active" href="#"' : '" href="?pushnotification"') . '>Push notification</a></li></ul>';
         if (isset($_GET["reportedabuse"]))
         {
             $abusecontent = fileread("abuses.txt");
@@ -86,6 +95,10 @@ if ($current->accessstatus)
                 $userlistoptions .= '<option value="' . $testuser->username . '"' . (isset($_POST["changeuserpw_targetuser"]) && $_POST["changeuserpw_targetuser"] == $testuser->username ? " selected" : "") . '>' . $testuser->username . '</option>';
             }
             echo '<form method="post" style="margin-top:1em;"><select name="changeuserpw_targetuser" class="form-select">' . $userlistoptions . '</select><input type="password" class="form-control mt-2" placeholder="New password" name="changeuserpw_newpassword" required><input type="password" class="form-control mt-2" placeholder="Your own account\'s password" name="changeuserpw_ownpassword" required><div class="mt-2">' . ($msg_cpw ?? "") . '</div><small class="mt-2 text-muted" style="display:block;">After you change the user\'s password, the user must change the password on the first login again to make sure nobody knows it.</small><button type="submit" class="btn btn-primary mt-2" name="changeuserpw_submit">Submit</button></form>';
+        }
+        else if (isset($_GET["pushnotification"]))
+        {
+            echo '<form method="post" style="margin-top:1em;"><input type="text" class="form-control mt-2" placeholder="Content" name="pushnotification_content" required><small class="mt-2 text-muted" style="display:block;">You can use IM.</small><button type="submit" class="btn btn-primary mt-3" name="pushnotification_submit">Submit</button></form>';
         }
         else
         {

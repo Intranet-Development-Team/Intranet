@@ -576,7 +576,7 @@ class Session extends User
 
             if ($this->loginstatus)
             {
-                if (isset($pageNotificationCount[$name]) && $this->currentpage !== $name)
+                if (isset($pageNotificationCount[$name]))
                 {
                     $badge = '<span class="badge bg-danger rounded-pill ms-2 align-self-center" style="font-size:.6rem;">' . $pageNotificationCount[$name] . '</span>';
                 }
@@ -625,6 +625,7 @@ class Session extends User
         if ($this->loginstatus)
         {
             $displaybar .= '<div style="position:fixed;top:4.5em;right:1em;z-index:999;width:25em;" id="notificationcontainer">' . $notificationoperator->getAllPushNotificationsDisplay() . '</div>';
+            $notificationoperator->removeGlobalNotifications();
         }
 
         return $displaybar;

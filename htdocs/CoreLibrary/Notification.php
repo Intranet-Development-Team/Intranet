@@ -269,4 +269,25 @@ class NotificationSystemOperator
 
         return;
     }
+
+    public function removeGlobalNotifications(): void
+    {
+        $allNotifications = $this->allNotifications;
+        foreach ($allNotifications as $key => &$notification)
+        {
+            if ($notification->ifShow() && $notification->page === "")
+            {
+                unset($allNotifications[$key]);
+                global $current;
+                foreach ($allNotifications as &$notification)
+                {
+                    $notification = serialize($notification);
+                }
+                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", json_encode($allNotifications));
+                break;
+            }
+        }
+
+        return;
+    }
 }
