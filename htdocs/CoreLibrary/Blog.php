@@ -21,9 +21,9 @@ class Blog
     public array $likes, $comments;
     public string $visibility;
 
-    public function __construct(string $author, string $title, string $content, string $time, ?string $edittime, array $likes, array $comments, string $visibility, ?string $visibility_type = null, ?array $visibility_targetusers = null)
+    public function __construct(string $authorusername, string $title, string $content, string $time, ?string $edittime, array $likes, array $comments, string $visibility, ?string $visibility_type = null, ?array $visibility_targetusers = null)
     {
-        $this->author = new User($author);
+        $this->author = new User($authorusername);
         $this->title = $title;
         $this->content = $content;
         $this->time = $time;

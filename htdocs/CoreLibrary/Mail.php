@@ -15,12 +15,12 @@ class Mail
     public array $to;
     public bool $read, $star;
 
-    public function __construct(string $subject, string $from, array $tos, string $content, string $time, bool $read = false, bool $star = false)
+    public function __construct(string $subject, string $fromusername, array $tousernames, string $content, string $time, bool $read = false, bool $star = false)
     {
-        $this->from = new User($from);
-        $tos = array_unique(array_filter($tos));
+        $this->from = new User($fromusername);
+        $tousernames = array_unique(array_filter($tousernames));
         $this->to = [];
-        foreach ($tos as $to)
+        foreach ($tousernames as $to)
         {
             $this->to[] = new User($to);
         }
