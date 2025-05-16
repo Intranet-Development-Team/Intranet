@@ -34,10 +34,8 @@ Upon the first login, `firstlogin.txt` will be created after the user changes th
 
 Files like `notifications.txt` will be created by the system with its first push notification. Directories like `Drafts`, `Logins`, `Mails` are alike.
 
-After starting the operation of Intranet, you should not delete any user as it may cause the system to throw `UnknownUsernameException` while reading content.
+After starting the operation of Intranet, you should not delete or modify any user's username as it may cause the system to throw `UnknownUsernameException` while reading user-related content.
 
-> Note that the username is the **unique identifier** of a user. One should not change the username when in operation, otherwise the user-specific content may become invalid.
-### Storage
 Most preset `.txt` files storing the content of Intranet can be initially empty (0 in length). Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty may result in error.
 ### Frontend
 The frontend is designed and programmed with Bootstrap 5.3, Bootstrap Icons 1.11.3, jQuery 3.6.4 and jQuery UI 1.13.2.
