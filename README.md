@@ -28,7 +28,7 @@ Files in `CoreLibrary` are used to include and not being run from web requests.
 
 `CoreFunctions.php` is the core of Intranet, containing the error handling system, user system and some core functions. It should be generally included in all pages that accept web requests. When a user is logged in, a `Session` object can be created and used to carry out user and session actions.
 ### User
-Users are stored under `Login/Accounts/`. Each directory represents a user with its name representing the username. Initially, only three files: `password.txt`, `role.txt` and `pfp.txt` are present and storing the *SHA3-512 hashed password*, *JSON-encoded roles* and *profile picture*.
+Users are stored under `Login/Accounts/`. Each directory represents a user with its name representing the username. Usernames are therefore unique identifiers. Initially, only three files: `password.txt`, `role.txt` and `pfp.txt` are present and storing the *SHA3-512 hashed password*, *JSON-encoded roles* and *profile picture*.
 
 Upon the first login, `firstlogin.txt` will be created after the user changes their password. Then, `birthday.txt` and `electives.txt` are created after user setting their birthday and elective subjects.
 
