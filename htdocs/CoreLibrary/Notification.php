@@ -54,11 +54,11 @@ class Notification
             $allNotifications = [];
             if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"))
             {
-                $allNotifications = (array)json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"), true);
+                $allNotifications = unserialize(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"));
             }
 
-            array_unshift($allNotifications, serialize($this));
-            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt", json_encode($allNotifications));
+            array_unshift($allNotifications, $this);
+            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt", serialize($allNotifications));
         }
     }
 
@@ -69,13 +69,12 @@ class Notification
             $allNotifications = [];
             if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"))
             {
-                $allNotifications = (array)json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"), true);
+                $allNotifications = unserialize(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt"));
             }
 
             $isNotified = false;
             foreach ($allNotifications as $notification)
             {
-                $notification = unserialize($notification);
                 if ($notification->page === $this->page && $notification->id === $this->id && $notification->data === $this->data)
                 {
                     $isNotified = true;
@@ -85,8 +84,8 @@ class Notification
 
             if (!$isNotified)
             {
-                array_unshift($allNotifications, serialize($this));
-                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt", json_encode($allNotifications));
+                array_unshift($allNotifications, $this);
+                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $targetUser . "/notifications.txt", serialize($allNotifications));
             }
         }
     }
@@ -111,12 +110,7 @@ class NotificationSystemOperator
         $this->allNotifications = [];
         if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt"))
         {
-            $this->allNotifications = (array)json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt"), true);
-        }
-
-        foreach ($this->allNotifications as &$notification)
-        {
-            $notification = unserialize($notification);
+            $this->allNotifications = unserialize(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt"));
         }
 
         //On-load Detection
@@ -138,6 +132,8 @@ class NotificationSystemOperator
                 $this->onloadDetectionNotifications[] = new Notification("", "", "Assignments", "missing_assignment", "", NotificationType::info, false);
             }
         }
+
+        $this->instantPushNotifications = [];
     }
 
     public function addInstantPushNotification(Notification $notification): void
@@ -167,11 +163,7 @@ class NotificationSystemOperator
         if ($edited)
         {
             global $current;
-            foreach ($this->allNotifications as &$notification)
-            {
-                $notification = serialize($notification);
-            }
-            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", json_encode($this->allNotifications));
+            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", serialize($this->allNotifications));
         }
 
         return $html;
@@ -239,11 +231,7 @@ class NotificationSystemOperator
         if ($edited)
         {
             global $current;
-            foreach ($allNotifications as &$notification)
-            {
-                $notification = serialize($notification);
-            }
-            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", json_encode($allNotifications));
+            filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", serialize($allNotifications));
         }
 
         return;
@@ -258,11 +246,7 @@ class NotificationSystemOperator
             {
                 unset($allNotifications[$key]);
                 global $current;
-                foreach ($allNotifications as &$notification)
-                {
-                    $notification = serialize($notification);
-                }
-                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", json_encode($allNotifications));
+                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", serialize($allNotifications));
                 break;
             }
         }
@@ -279,11 +263,7 @@ class NotificationSystemOperator
             {
                 unset($allNotifications[$key]);
                 global $current;
-                foreach ($allNotifications as &$notification)
-                {
-                    $notification = serialize($notification);
-                }
-                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", json_encode($allNotifications));
+                filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/notifications.txt", serialize($allNotifications));
                 break;
             }
         }

@@ -42,7 +42,7 @@ if ($current->accessstatus)
         try
         {
             $testuser = new User($_POST["changeuserrole_targetuser"]);
-            $role2write = array_values(array_diff((array)json_decode(fileread("../Login/Accounts/" . $item . "/role.txt"), true), ROLE_LIST));
+            $role2write = array_diff((array)json_decode(fileread("../Login/Accounts/" . $item . "/role.txt"), true), ROLE_LIST);
             if (!empty($_POST["changeuserrole_roles"]))
             {
                 foreach ($_POST["changeuserrole_roles"] as $role)
@@ -96,12 +96,12 @@ if ($current->accessstatus)
         if (isset($_GET["loginlog"]))
         {
             $loginlogcontent = fileread("loginlog.txt");
-            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($loginlogcontent) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No logins logged</h6>" : $loginlogcontent) . '</div><form method="post"><button type="button" onclick="if(confirm(\'Are you sure to clear the login log? This action cannot be undone.\')){$(this).attr(\'type\',\'submit\');$(this).parent().submit();}" class="btn btn-lg w-100 mt-4 btn-danger" name="loginlogdelete"><i class="bi bi-trash3-fill"></i> Clear login log</button><form>';
+            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($loginlogcontent) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No logins logged</h6>" : $loginlogcontent) . '</div><form method="post" id="loginlogdeleteform"><button type="button" onclick="confirmModal(\'Confirm clearing login log\',\'Are you sure to clear the login log? This action cannot be undone.\',\'$(&quot;#loginlogdeleteform&quot;).submit();\');" class="btn btn-lg w-100 mt-4 btn-danger"><i class="bi bi-trash3-fill"></i> Clear login log</button><input type="hidden" name="loginlogdelete"><form>';
         }
         else if (isset($_GET["errorlog"]))
         {
             $errorlog = fileread("errorlog.txt");
-            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($errorlog) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No errors logged</h6>" : $errorlog) . '</div><form method="post"><button type="button" onclick="if(confirm(\'Are you sure to clear the error log? This action cannot be undone.\')){$(this).attr(\'type\',\'submit\');$(this).parent().submit();}" class="btn btn-lg w-100 mt-4 btn-danger" name="errorlogdelete"><i class="bi bi-trash3-fill"></i> Clear error log</button><form>';
+            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($errorlog) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No errors logged</h6>" : $errorlog) . '</div><form method="post" id="errorlogdeleteform"><button type="button" onclick="confirmModal(\'Confirm clearing error log\',\'Are you sure to clear the error log? This action cannot be undone.\',\'$(&quot;#errorlogdeleteform&quot;).submit();\');" class="btn btn-lg w-100 mt-4 btn-danger"><i class="bi bi-trash3-fill"></i> Clear error log</button><input type="hidden" name="errorlogdelete"><form>';
         }
         else if (isset($_GET["changeuserrole"]))
         {
@@ -146,7 +146,7 @@ if ($current->accessstatus)
         else
         {
             $feedbackcontent = fileread("feedbacks.txt");
-            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($feedbackcontent) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No feedbacks</h6>" : $feedbackcontent) . '</div><form method="post"><button type="button" onclick="if(confirm(\'Are you sure to clear feedbacks? This action cannot be undone.\')){$(this).attr(\'type\',\'submit\');$(this).parent().submit();}" class="btn btn-lg w-100 mt-4 btn-danger" name="feedbacksdelete"><i class="bi bi-trash3-fill"></i> Clear Feedbacks</button><form>';
+            echo '<div class="card card-body" style="max-height:50em;overflow:auto;">' . (empty($feedbackcontent) ? "<h6 style=\"text-align:center;margin-bottom:0em;\">No feedbacks</h6>" : $feedbackcontent) . '</div><form method="post" id="feedbacksdeleteform"><button type="button" onclick="confirmModal(\'Confirm clearing feedbacks\',\'Are you sure to clear the feedbacks? This action cannot be undone.\',\'$(&quot;#feedbacksdeleteform&quot;).submit();\');" class="btn btn-lg w-100 mt-4 btn-danger"><i class="bi bi-trash3-fill"></i> Clear Feedbacks</button><input type="hidden" name="feedbacksdelete"><form>';
         }
     }
     else

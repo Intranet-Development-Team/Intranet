@@ -21,7 +21,8 @@ console.log("%cLearn more on: https://en.wikipedia.org/wiki/Self-XSS", "font-siz
 
 function confirmModal(title, message, successfunction, btncancel = "Cancel", btncontinue = "Continue")
 {
-    let element = $('<div class="modal fade"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h1 class="modal-title fs-5">' + title + '</h1></div><div class="modal-body">' + message + '</div><div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">' + btncancel + '</button><button class="btn btn-danger" data-bs-dismiss="modal" onclick="' + successfunction + '">' + btncontinue + '</button></div></div></div></div></div>');
+    let element = $('<div class="modal fade"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h1 class="modal-title fs-5">' + title + '</h1></div><div class="modal-body">' + message + '</div><div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">' + btncancel + '</button><button class="btn btn-danger" data-bs-dismiss="modal">' + btncontinue + '</button></div></div></div></div></div>');
+    element.children().last().children().last().children().last().children().last().attr("onclick", successfunction);
 
     let modal = new bootstrap.Modal(element);
     modal.show();
@@ -30,6 +31,7 @@ function confirmModal(title, message, successfunction, btncancel = "Cancel", btn
 function alertModal(title, message, afterfunction, btn = "Ok")
 {
     let element = $('<div class="modal fade"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h1 class="modal-title fs-5">' + title + '</h1></div><div class="modal-body">' + message + '</div><div class="modal-footer"><button class="btn btn-primary" data-bs-dismiss="modal" onclick="' + afterfunction + '">' + btn + '</button></div></div></div></div></div>');
+    element.children().last().children().last().children().last().children().last().attr("onclick", afterfunction);
 
     let modal = new bootstrap.Modal(element);
     modal.show();

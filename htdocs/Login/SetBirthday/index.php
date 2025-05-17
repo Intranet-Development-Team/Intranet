@@ -63,14 +63,14 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
         <h1>Hi, <?= $current->username ?>.</h1>
         <h6 class="text-muted">Please fill in your birthday <br>to let others know more about you:</h6>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" onsubmit="preventMisclick($('#submitbtn'))">
         <div class="form-floating mb-1">
-          <input type="date" class="form-control" id="bday" name="birthday" placeholder="Birthday" value="<?= $_POST["birthday"] ?? "" ?>" required>
+          <input type="date" class="form-control" id="bday" name="birthday" placeholder="Birthday" value="<?= $_POST["birthday"] ?? "" ?>" onchange="if($('#bday').val()){$('#submitbtn').prop('disabled', false);}else{$('#submitbtn').prop('disabled', true);}" required>
           <label for="birthday">Birthday</label>
         </div>
         <small style="color:red;"><?= $error ?? "" ?></small>
         <br>
-        <button class="w-100 btn btn-lg btn-primary" name="submit" id="log" onclick="preventMisclick($(this))" style="margin-top:0.2em;">Submit</button>
+        <button class="w-100 btn btn-lg btn-primary" name="submitbtn" id="submitbtn" style="margin-top:0.2em;" disabled>Submit</button>
       </form>
     </main>
   <?php

@@ -75,14 +75,14 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
         <h5>This is your first login.</h5>
         <h6 class="text-muted">To protect your account,<br>please change your password below:</h6>
       </div>
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" onsubmit="preventMisclick($('#submitbtn'))">
         <div class="form-floating mb-1">
-          <input type="password" class="form-control" id="password" name="password" placeholder="New password" onkeyup="showHint(this.value)" autofocus required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="New password" onkeyup="showHint(this.value);if(showHint($('#password').val())&&ifmatches()){$('#submitbtn').prop('disabled', false);}else{$('#submitbtn').prop('disabled', true);}" autofocus required>
           <label for="password">New password</label>
         </div>
         <p id="hint" style="text-align:left;font-size:0.75em;margin-top:0.2em;"></p>
         <div class="form-floating mb-1">
-          <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm new password" onkeyup="ifmatches()" required>
+          <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm new password" onkeyup="ifmatches();if(showHint($('#password').val())&&ifmatches()){$('#submitbtn').prop('disabled', false);}else{$('#submitbtn').prop('disabled', true);}" required>
           <label for="confirmpassword">Confirm new password</label>
         </div>
         <p id="hint2" style="text-align:left;font-size:0.75em;margin-top:0.2em;color:red;"><?= $error ?? "" ?></p>
@@ -90,7 +90,7 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
           <input class="form-check-input" type="checkbox" onclick="spw()" id="spch">
           <label class="form-check-label" for="spch">Show passwords</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" name="submit" id="log" onclick="preventMisclick($(this))" style="margin-top:0.2em;">Change</button>
+        <button class="w-100 btn btn-lg btn-primary" name="submitbtn" id="submitbtn" style="margin-top:0.2em;" disabled>Change</button>
       </form>
     </main>
   <?php
@@ -115,20 +115,24 @@ else if ($current->accessstatus)
     }
 
     function ifmatches() {
-      if (document.getElementById("password").value !== document.getElementById("confirmpassword").value && document.getElementById("confirmpassword").value !== "") {
+      if ($("#password").val() !== $("#confirmpassword").val() && $("#confirmpassword").val() !== "") {
         document.getElementById("hint2").style.color = "red";
         document.getElementById("hint2").innerHTML = "&#10060; Confirm password do not match.<br>";
       } else {
         document.getElementById("hint2").innerHTML = "";
+        if ($("#password").val() === $("#confirmpassword").val()) {
+          return true;
+        }
       }
     }
 
     function showHint(str) {
+      ifmatches();
       if (str.length >= 8 && (/\d/.test(str)) == true && (/[A-Z]/.test(str)) == true && (/[a-z]/.test(str)) == true) {
         document.getElementById("hint").style.color = (str.length >= 16 ? "#177a2e" : "#1570d1");
         document.getElementById("hint").innerHTML = (str.length >= 16 ? "Strong password" : "Good password") + "<br>";
+        return true;
       } else if (str.length == 0) {
-        document.getElementById("hint").style.color = "black";
         document.getElementById("hint").innerHTML = "";
       } else {
         document.getElementById("hint").innerHTML = "";
@@ -149,7 +153,6 @@ else if ($current->accessstatus)
           document.getElementById("hint").innerHTML += "&#10060; Must include a small letter.<br>";
         }
       }
-      ifmatches()
     }
   </script>
   </body>
