@@ -37,7 +37,7 @@ Files like `notifications.txt` will be created by the system with its first push
 Roles not listed in the `ROLE_LIST` constant in `CoreLibrary/CoreFunctions.php` cannot be added to or removed from users.
 
 After starting the operation of Intranet, you should not delete or modify any user's username as it may cause the system to throw `UnknownUsernameException` while reading user-related content.
-
+### Storage
 Most preset `.txt` files storing the content of Intranet can be initially empty (0 in length). Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty results in error.
 ### Frontend
 The frontend is designed and programmed with Bootstrap 5.3, Bootstrap Icons 1.11.3, jQuery 3.6.4 and jQuery UI 1.13.2.
