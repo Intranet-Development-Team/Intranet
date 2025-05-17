@@ -65,8 +65,8 @@ if ($current->loginstatus && !$current->accessstatus && !is_file($_SERVER["DOCUM
 ?>
 
   <body class="bg-body-tertiary m-0">
-    <form method="post" id="logoutcurrent">
-      <button type="button" class="btn text-danger" style="position:fixed;top:1em;left:1em;" onclick="confirmModal('Log out?','Are you sure to log out from current device?','$(\'#logoutcurrent\').submit()','Cancel','Log out')"><i class="bi bi-box-arrow-right"></i> Log out</button>
+    <form method="post" id="logoutcurrent" onsubmit="preventMisclick($('#logoutbtn'))">
+      <button type="button" class="btn text-danger" style="position:fixed;top:1em;left:1em;" onclick="confirmModal('Log out?','Are you sure to log out from current device?','$(\'#logoutcurrent\').submit()','Cancel','Log out')" id="logoutbtn"><i class="bi bi-box-arrow-right"></i> Log out</button>
       <input type="hidden" name="logout">
     </form>
     <main class="form-signin">

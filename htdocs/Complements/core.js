@@ -39,11 +39,12 @@ function alertModal(title, message, afterfunction, btn = "Ok")
 
 function preventMisclick(ele)
 {
+    let orginaltext = ele.html();
     ele.css('pointer-events', 'none');
     ele.html('<div class="spinner-border" role="status"style="width:.95em;height:.95em;"></div> Loading');
     setTimeout(function ()
     {
         ele.css('pointer-events', 'auto');
-        ele.html("Resubmit");
+        ele.html(orginaltext);
     }, 10000);
 }

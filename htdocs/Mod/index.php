@@ -79,7 +79,8 @@ if ($current->accessstatus)
     if ($current->accessstatus)
     {
         echo '<h1>Mod Console</h1><hr>';
-        echo '<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link' . (!(isset($_GET["reportedabuse"]) || isset($_GET["changeuserpw"])) ? ' active" href="#"' : '" href="?"') . '>Suspend account</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["reportedabuse"]) ? ' active" href="#"' : '" href="?reportedabuse"') . '>Reported abuses</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["changeuserpw"]) ? ' active" href="#"' : '" href="?changeuserpw"') . '>Change user\'s password</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["pushnotification"]) ? ' active" href="#"' : '" href="?pushnotification"') . '>Push notification</a></li></ul>';
+        echo '<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link' . (!(isset($_GET["reportedabuse"]) || isset($_GET["changeuserpw"]) || isset($_GET["pushnotification"])) ? ' active" href="#"' : '" href="?"') . '>Suspend account</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["reportedabuse"]) ? ' active" href="#"' : '" href="?reportedabuse"') . '>Reported abuses</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["changeuserpw"]) ? ' active" href="#"' : '" href="?changeuserpw"') . '>Change user\'s password</a></li><li class="nav-item"><a class="nav-link' . (isset($_GET["pushnotification"]) ? ' active" href="#"' : '" href="?pushnotification"') . '>Push notification</a></li></ul>';
+        
         if (isset($_GET["reportedabuse"]))
         {
             $abusecontent = fileread("abuses.txt");
@@ -94,11 +95,11 @@ if ($current->accessstatus)
                 $testuser = new User($item);
                 $userlistoptions .= '<option value="' . $testuser->username . '"' . (isset($_POST["changeuserpw_targetuser"]) && $_POST["changeuserpw_targetuser"] == $testuser->username ? " selected" : "") . '>' . $testuser->username . '</option>';
             }
-            echo '<form method="post" style="margin-top:1em;"><select name="changeuserpw_targetuser" class="form-select">' . $userlistoptions . '</select><input type="password" class="form-control mt-2" placeholder="New password" name="changeuserpw_newpassword" required><input type="password" class="form-control mt-2" placeholder="Your own account\'s password" name="changeuserpw_ownpassword" required><div class="mt-2">' . ($msg_cpw ?? "") . '</div><small class="mt-2 text-muted" style="display:block;">After you change the user\'s password, the user must change the password on the first login again to make sure nobody knows it.</small><button type="submit" class="btn btn-primary mt-2" name="changeuserpw_submit">Submit</button></form>';
+            echo '<form method="post" style="margin-top:1em;" onsubmit="preventMisclick($(\'changeuserpw_submit\'))"><select name="changeuserpw_targetuser" class="form-select">' . $userlistoptions . '</select><input type="password" class="form-control mt-2" placeholder="New password" name="changeuserpw_newpassword" required><input type="password" class="form-control mt-2" placeholder="Your own account\'s password" name="changeuserpw_ownpassword" required><div class="mt-2">' . ($msg_cpw ?? "") . '</div><small class="mt-2 text-muted" style="display:block;">After you change the user\'s password, the user must change the password on the first login again to make sure nobody knows it.</small><button type="submit" class="btn btn-primary mt-2" name="changeuserpw_submit" id="changeuserpw_submit">Submit</button></form>';
         }
         else if (isset($_GET["pushnotification"]))
         {
-            echo '<form method="post" style="margin-top:1em;"><input type="text" class="form-control mt-2" placeholder="Content" name="pushnotification_content" required><small class="mt-2 text-muted" style="display:block;">You can use IM.</small><button type="submit" class="btn btn-primary mt-3" name="pushnotification_submit">Submit</button></form>';
+            echo '<form method="post" style="margin-top:1em;" onsubmit="preventMisclick($(\'pushnotification_submit\'))"><input type="text" class="form-control mt-2" placeholder="Content" name="pushnotification_content" required><small class="mt-2 text-muted" style="display:block;">You can use IM.</small><button type="submit" class="btn btn-primary mt-3" name="pushnotification_submit" id="pushnotification_submit">Submit</button></form>';
         }
         else
         {
@@ -110,7 +111,7 @@ if ($current->accessstatus)
                 $userlistoptions .= '<option value="' . $testuser->username . '"' . (isset($_POST["suspendaccount_targetuser"]) && $_POST["suspendaccount_targetuser"] == $testuser->username ? " selected" : "") . '>' . $testuser->username . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . (is_file("../Login/Accounts/" . $testuser->username . "/suspended.txt") && !empty(fileread("../Login/Accounts/" . $testuser->username . "/suspended.txt") && strtotime(fileread("../Login/Accounts/" . $testuser->username . "/suspended.txt")) >= time()) ? "(current suspension until " . fileread("../Login/Accounts/" . $testuser->username . "/suspended.txt")  . ")" : "") . '</option>';
             }
 
-            echo '<form method="post"><select name="suspendaccount_targetuser" class="form-select mt-2">' . $userlistoptions . '</select><h6 class="mt-2">Block the target user from logging into Intranet until:</h6><input type="datetime-local" class="form-control" style=" width:100%;" name="suspendaccount_time" required><div class="mt-2">' . ($msg_suspension ?? "") . '</div><button type="submit" class="btn btn-primary mt-3" name="suspendaccount_submit">Submit</button></form>';
+            echo '<form method="post" onsubmit="preventMisclick($(\'suspendaccount_submit\'))"><select name="suspendaccount_targetuser" class="form-select mt-2">' . $userlistoptions . '</select><h6 class="mt-2">Block the target user from logging into Intranet until:</h6><input type="datetime-local" class="form-control" style=" width:100%;" name="suspendaccount_time" required><div class="mt-2">' . ($msg_suspension ?? "") . '</div><button type="submit" class="btn btn-primary mt-3" name="suspendaccount_submit" id="suspendaccount_submit">Submit</button></form>';
         }
     }
     else

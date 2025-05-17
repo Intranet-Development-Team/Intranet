@@ -151,7 +151,7 @@ function getSubjectsSelectionInputChoices(string $choice = ""): string
 
 function getFutureTodayEventsDisplay(int|string $version = "current"): string
 {
-  $display = '<div class="card"><form method="post" id="editfutureNtodayform"><div class="card-body">';
+  $display = '<div class="card"><div class="card-body">';
   $originalEvents = getEventsByRange(strtotime("today"), INF, false, true, $version);
 
   $counter = 0;
@@ -174,7 +174,7 @@ function getFutureTodayEventsDisplay(int|string $version = "current"): string
 
 function getPastEventsDisplay(int|string $version = "current"): string
 {
-  $display = '<div class="card"><form method="post" id="editpastform"><div class="card-body">';
+  $display = '<div class="card"><div class="card-body">';
   $originalEvents = getEventsByRange(-INF, strtotime("today"), false, true, $version);
 
   $counter = 0;
@@ -344,9 +344,9 @@ function array_diff_multidimensional($array1, $array2): array
     </li>
   </ul>';
 
-        echo '<form method="post" id="forms"><div id="futuretodaypage">' . getFutureTodayEventsDisplay(isset($histid) ? $histid : "current") . '</div>';
+        echo '<form method="post" id="forms" onsubmit="preventMisclick($(\'#submitbtn\'))"><div id="futuretodaypage">' . getFutureTodayEventsDisplay(isset($histid) ? $histid : "current") . '</div>';
         echo '<div id="pastpage">' . getPastEventsDisplay(isset($histid) ? $histid : "current") . '</div>';
-        echo '<div id="newpage"><div class="card"><div class="card-body" id="addNewContainer"><div class="card shadow border-0 m-3"><div class="card-body" style="display:flex;"><select class="form-select me-2" name="newEventsSubjects[]" style="max-width:10em;min-width:0em;width:fit-content;">' . getSubjectsSelectionInputChoices() . '</select><input type="text" class="form-control me-2" name="newEventsNames[]" style="flex-grow:1;" placeholder="Content"><input type="date" class="form-control me-2" name="newEventsDates[]" style="width:15em;"><input type="time" class="form-control me-2" name="newEventsStartTimes[]" style="width:10em;"><input type="time" class="form-control" name="newEventsEndTimes[]" style="width:10em;"><button type="button" class="btn p-2" onclick="$(this).parent().parent().remove()"><i class="bi bi-x-lg"></i></button></div></div></div></form><div class="card-body"><button onclick="newEventItem()" class="btn btn-outline-secondary" style="width:100%;border:dashed;" type="button"><i class="bi bi-plus-lg"></i> New item</button></div></div></div><button type="button" class="btn btn-primary btn-lg w-100 mt-2" onclick="preventMisclick($(this));preSubmitOptimization();" id="submitbtn">Submit</button>';
+        echo '<div id="newpage"><div class="card"><div class="card-body" id="addNewContainer"><div class="card shadow border-0 m-3"><div class="card-body" style="display:flex;"><select class="form-select me-2" name="newEventsSubjects[]" style="max-width:10em;min-width:0em;width:fit-content;">' . getSubjectsSelectionInputChoices() . '</select><input type="text" class="form-control me-2" name="newEventsNames[]" style="flex-grow:1;" placeholder="Content"><input type="date" class="form-control me-2" name="newEventsDates[]" style="width:15em;"><input type="time" class="form-control me-2" name="newEventsStartTimes[]" style="width:10em;"><input type="time" class="form-control" name="newEventsEndTimes[]" style="width:10em;"><button type="button" class="btn p-2" onclick="$(this).parent().parent().remove()"><i class="bi bi-x-lg"></i></button></div></div></div></form><div class="card-body"><button onclick="newEventItem()" class="btn btn-outline-secondary" style="width:100%;border:dashed;" type="button"><i class="bi bi-plus-lg"></i> New item</button></div></div></div><button type="button" class="btn btn-primary btn-lg w-100 mt-2" onclick="preSubmitOptimization();" id="submitbtn">Submit</button>';
       }
       else
       {
@@ -358,7 +358,7 @@ function array_diff_multidimensional($array1, $array2): array
           $displayOriginals .= '<div class="card shadow border-0 m-3"><div class="card-body" style="display:flex;"><div class="form-control me-2" style="width:10em;overflow:auto;">' . $item["original"]["subject"] . '</div><div class="form-control me-2" style="flex-grow:1;overflow:auto;">' . $IMP->line($item["original"]["name"]) . '</div><div class="form-control me-2" style="width:15em;overflow:auto;">' . date("d/m/Y", strtotime($item["original"]["date"])) . '</div><div class="form-control me-2" style="width:10em;overflow:auto;">' . $item["original"]["start"] . '</div><div class="form-control" style="width:10em;overflow:auto;">' . $item["original"]["end"] . '</div><input type="hidden" name="newEventsSubjects[]" value="' . $item["original"]["subject"] . '"><input type="hidden" name="newEventsNames[]" value="' . $item["original"]["name"] . '"><input type="hidden" name="newEventsDates[]" value="' . $item["original"]["date"] . '"><input type="hidden" name="newEventsStartTimes[]" value="' . $item["original"]["start"] . '"><input type="hidden" name="newEventsEndTimes[]" value="' . $item["original"]["end"] . '"></div></div>';
         }
 
-        echo '<h3>Edit conflict</h3><p>Some of your edits cannot be made because their original content cannot be found in the current calendar events. This is usually because somebody else has edited the calendar events while you were editing.</p><p>Please choose which action to take.</p><p>Failed edits:</p><div class="card mb-3"><form method="post" id="addNewForm_new"><div class="card-body">' . $displayFailedEdits . '</div></form></div><p>Their corresponding original content:</p><div class="card mb-3"><form method="post" id="addNewForm_original"><div class="card-body">' . $displayOriginals . '</div></form></div><div class="row"><button class="btn btn-primary col m-3 mb-0" style="min-width:20em;" onclick="preventMisclick($(this));$(\'#addNewForm_new\').submit();"><i class="bi bi-plus-lg"></i> Add the failed edits as new events</button><button class="btn btn-secondary col m-3 mb-0" style="min-width:20em;" onclick="preventMisclick($(this));$(\'#addNewForm_original\').submit();"><i class="bi bi-clock-history"></i> Add back the original items</button><a class="btn btn-success col m-3 mb-0" style="min-width:20em;" href="../Calendar/"><i class="bi bi-arrow-right"></i> Continue without adding anything</a></div>';
+        echo '<h3>Edit conflict</h3><p>Some of your edits cannot be made because their original content cannot be found in the current calendar events. This is usually because somebody else has edited the calendar events while you were editing.</p><p>Please choose which action to take.</p><p>Failed edits:</p><div class="card mb-3"><form method="post" id="addNewForm_new" onsubmit="preventMisclick($(\'#addNewForm_newsubmitbtn\'))"><div class="card-body">' . $displayFailedEdits . '</div></form></div><p>Their corresponding original content:</p><div class="card mb-3"><form method="post" id="addNewForm_original" onsubmit="preventMisclick($(\'#addNewForm_originalsubmitbtn\'))"><div class="card-body">' . $displayOriginals . '</div></form></div><div class="row"><button class="btn btn-primary col m-3 mb-0" style="min-width:20em;" onclick="$(\'#addNewForm_new\').submit();" id="addNewForm_newsubmitbtn"><i class="bi bi-plus-lg"></i> Add the failed edits as new events</button><button class="btn btn-secondary col m-3 mb-0" style="min-width:20em;" onclick="$(\'#addNewForm_original\').submit();" id="addNewForm_originalsubmitbtn"><i class="bi bi-clock-history"></i> Add back the original items</button><a class="btn btn-success col m-3 mb-0" style="min-width:20em;" href="../Calendar/"><i class="bi bi-arrow-right"></i> Continue without adding anything</a></div>';
       }
     }
   }
