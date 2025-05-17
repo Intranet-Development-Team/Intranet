@@ -36,6 +36,8 @@ Files like `notifications.txt` will be created by the system with its first push
 
 After starting the operation of Intranet, you should not delete any user as it may cause the system to throw `UnknownUsernameException` while reading content.
 
+Roles not listed in the `ROLE_LIST` constant in `CoreLibrary/CoreFunctions.php` cannot be added to or removed from users.
+
 > Note that the username is the **unique identifier** of a user. One should not change the username when in operation, otherwise the user-specific content may become invalid.
 ### Storage
 Most preset `.txt` files storing the content of Intranet can be initially empty (0 in length). Exceptions are `pfp.txt` and `password.txt` in user directories. Making them empty may result in error.

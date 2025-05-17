@@ -253,9 +253,6 @@ function pathInjectionSecure(string $str): bool
 class UnknownUsernameException extends Exception
 {
 }
-class UnknownRoleException extends Exception
-{
-}
 class CurrentSessionInstanceMissingException extends Exception
 {
 }
@@ -277,38 +274,31 @@ class User
             $this->username = $username;
 
             $rolesaved = (array)json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $username . "/role.txt"), true);
-            if (array_intersect($rolesaved, ROLE_LIST) === $rolesaved)
+            $this->role = $rolesaved;
+            foreach ($rolesaved as $role)
             {
-                $this->role = $rolesaved;
-                foreach ($rolesaved as $role)
+                switch ($role)
                 {
-                    switch ($role)
-                    {
-                        case "student":
-                            $this->rolefordisplay .= '<span class="ps-2 pe-2">Student</span>';
-                            break;
+                    case "student":
+                        $this->rolefordisplay .= '<span class="ps-2 pe-2">Student</span>';
+                        break;
 
-                        case "teacher":
-                            $this->rolefordisplay .= '<span class="ps-2 pe-2">Teacher</span>';
-                            break;
+                    case "teacher":
+                        $this->rolefordisplay .= '<span class="ps-2 pe-2">Teacher</span>';
+                        break;
 
-                        case "moderator":
-                            $this->rolefordisplay .= '<span class="ps-2 pe-2"><i class="bi bi-hexagon-fill"></i> Moderator</span>';
-                            $this->roleicon .= '<i class="bi bi-hexagon-fill ps-1 pe-1"></i>';
-                            break;
+                    case "moderator":
+                        $this->rolefordisplay .= '<span class="ps-2 pe-2"><i class="bi bi-hexagon-fill"></i> Moderator</span>';
+                        $this->roleicon .= '<i class="bi bi-hexagon-fill ps-1 pe-1"></i>';
+                        break;
 
-                        case "developer":
-                            $this->rolefordisplay .= '<span class="ps-2 pe-2"><i class="bi bi-code-slash"></i> Developer</span>';
-                            $this->roleicon .= '<i class="bi bi-code-slash ps-1 pe-1"></i>';
-                            break;
-                    }
+                    case "developer":
+                        $this->rolefordisplay .= '<span class="ps-2 pe-2"><i class="bi bi-code-slash"></i> Developer</span>';
+                        $this->roleicon .= '<i class="bi bi-code-slash ps-1 pe-1"></i>';
+                        break;
                 }
-                $this->usernamefordisplay = $this->username . $this->roleicon;
             }
-            else
-            {
-                throw new UnknownRoleException((string)$rolesaved);
-            }
+            $this->usernamefordisplay = $this->username . $this->roleicon;
         }
         else
         {

@@ -42,7 +42,7 @@ if ($current->accessstatus)
         try
         {
             $testuser = new User($_POST["changeuserrole_targetuser"]);
-            $role2write = [];
+            $role2write = array_values(array_diff((array)json_decode(fileread("../Login/Accounts/" . $item . "/role.txt"), true), ROLE_LIST));
             if (!empty($_POST["changeuserrole_roles"]))
             {
                 foreach ($_POST["changeuserrole_roles"] as $role)
@@ -126,7 +126,7 @@ if ($current->accessstatus)
               </div>';
             }
 
-            echo '<form method="post" style="margin-top:1em;"><select name="changeuserrole_targetuser" class="form-select">' . $userlistoptions . '</select><div class="card p-3 mt-2"><h6>Roles (leave all check boxes empty to clear all roles): </h6>' . $rolelistdisplay . '</div><button type="submit" class="btn btn-primary mt-2" name="changeuserrole_submit">Submit</button></form>';
+            echo '<form method="post" style="margin-top:1em;"><select name="changeuserrole_targetuser" class="form-select">' . $userlistoptions . '</select><div class="card p-3 mt-2"><h6>Roles (leave all check boxes empty to clear all roles): </h6>' . $rolelistdisplay . '</div><small class="mt-2 text-muted" style="display:block;">Roles not defined in ROLE_LIST cannot be modified here.</small><button type="submit" class="btn btn-primary mt-2" name="changeuserrole_submit">Submit</button></form>';
         }
         else if (isset($_GET["adduser"]))
         {
