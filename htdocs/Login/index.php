@@ -151,8 +151,8 @@ if (isset($error))
   }
   else if ($error === "Your account is suspended.")
   {
-    $suspensionedntime = fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/suspended.txt");
-    echo '<head><meta charset="utf-8"> <noscript><meta http-equiv="refresh" content="0; url=https://' . SITE_DOMAIN . '/JSdisabled/"></noscript> <link rel="icon" href="/Complements/img/icon.png"> <title>Suspension Notice | ' . SITE_NAME . ' </title><link rel="stylesheet" href="/Complements/Bootstrap/css/bootstrap.min.css"></head><body><main><div style="margin: 0;position: absolute;top: 40%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);text-align:center;"><img style="width:10em;margin-bottom:1em;" src="/Complements/img/icon.png"><h2><b>Your account is suspended</b></h2><br><h4>Please retry login after <i>' . $suspensionedntime . '</i>.</h4></div></body>';
+    $suspensionendtime = fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $current->username . "/suspended.txt");
+    echo '<head><meta charset="utf-8"> <noscript><meta http-equiv="refresh" content="0; url=https://' . SITE_DOMAIN . '/JSdisabled/"></noscript> <link rel="icon" href="/Complements/img/icon.png"> <title>Suspension Notice | ' . SITE_NAME . ' </title><link rel="stylesheet" href="/Complements/Bootstrap/css/bootstrap.min.css"></head><body><main><div style="margin: 0;position: absolute;top: 40%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);text-align:center;"><img style="width:10em;margin-bottom:1em;" src="/Complements/img/icon.png"><h2><b>Your account is suspended</b></h2><br><h4>Please retry login after <i>' . $suspensionendtime . '</i>.</h4></div></body>';
     exit();
   }
 }
