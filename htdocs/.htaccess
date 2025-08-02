@@ -1,11 +1,9 @@
-php_value date.timezone Asia/Hong_Kong
-
 <Files ~ "\.txt$">
     Deny from All
 </Files>
 
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
 Options -Indexes
+
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+php_value date.timezone Asia/Hong_Kong
