@@ -219,6 +219,36 @@ function fileread(string $filename): bool|string
     }
 }
 
+function dbexecute(string $filename, string $contents): bool
+{
+    $conn = new SQLite3($filename);
+    if ($conn->connect_error) {
+        return false;
+    }
+    $stmt = $conn->prepare("INSERT INTO files (filename, contents) VALUES (?, ?)");
+    $stmt->bind_param("ss", $filename, $contents);
+    $result = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $result;
+}
+
+function dbquery(string $filename): array
+{
+    $conn = new mysqli("localhost", "username", "password", "database");
+    if ($conn->connect_error) {
+        return false;
+    }
+    $stmt = $conn->prepare("SELECT contents FROM files WHERE filename = ?");
+    $stmt->bind_param("s", $filename);
+    $stmt->execute();
+    $stmt->bind_result($contents);
+    $stmt->fetch();
+    $stmt->close();
+    $conn->close();
+    return $contents;
+}
+
 function random_str(): string
 {
     $return = "";

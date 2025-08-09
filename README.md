@@ -11,7 +11,7 @@ Intranet is an online information exchange platform for students.
 ## Usage
 ### Requirements
 - PHP Version >= 8.0
-- Extension GD enabled
+- Extension `GD` and `sqlite3` enabled
 > Note that `https` is required by default. Set in root `.htaccess`. Delete it if you do not have TLS/SSL.
 #### Recommended PHP Configuration
 The below configurations are not required but can be set to enhance the server.
