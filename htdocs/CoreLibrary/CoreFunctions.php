@@ -116,9 +116,25 @@ define("USER_LIST", $allUsers);
 
 define("ROLE_LIST", ["student", "teacher", "moderator", "developer"]);
 
-// Root Functions
+// Root Functions and Root Functions' Exceptions
 
-function filewrite(string $filename, string $contents, string $append = ""): bool
+class FileNotFoundException extends Exception
+{
+    public function __construct(string $path)
+    {
+        parent::__construct("File not found: $path");
+    }
+}
+
+class FileLockedTooLongException extends Exception
+{
+    public function __construct(string $path)
+    {
+        parent::__construct("File is locked for too long: $path");
+    }
+}
+
+function filewrite(string $filename, string $contents, string $append = ""): void
 {
     $originalcontents = "";
     if (is_file($filename))
@@ -142,7 +158,6 @@ function filewrite(string $filename, string $contents, string $append = ""): boo
         }
         fflush($file);
         fclose($file);
-        return true;
     }
     else
     {
@@ -165,15 +180,15 @@ function filewrite(string $filename, string $contents, string $append = ""): boo
                 }
                 fflush($file);
                 fclose($file);
-                return true;
+                return;
             }
         }
         fclose($file);
-        return false;
+        throw new FileLockedTooLongException($file);
     }
 }
 
-function fileread(string $filename): bool|string
+function fileread(string $filename): string
 {
     if (is_file($filename))
     {
@@ -200,53 +215,13 @@ function fileread(string $filename): bool|string
                 }
             }
             fclose($file);
-            return false;
+            throw new FileLockedTooLongException($file);
         }
     }
     else
     {
-        $stacktraceoutput = "";
-        $length = 0;
-        foreach (debug_backtrace() as $index => $content)
-        {
-            $stacktraceoutput .= "#$index " . $content["file"] . "(" . $content["line"] . ")" . (!empty($content["function"]) ? ": " . $content["function"] . "(" . implode(",", $content["args"]) . ")" : "") . PHP_EOL;
-            ++$length;
-        }
-        $stacktraceoutput .= "#$length {main}" . PHP_EOL . "thrown";
-
-        trigger_error("The file \"" . $filename . "\" doesn't exist" . PHP_EOL . "Stack trace:" . PHP_EOL . $stacktraceoutput, E_USER_WARNING);
-        return false;
+        throw new FileNotFoundException($filename);
     }
-}
-
-function dbexecute(string $filename, string $contents): bool
-{
-    $conn = new SQLite3($filename);
-    if ($conn->connect_error) {
-        return false;
-    }
-    $stmt = $conn->prepare("INSERT INTO files (filename, contents) VALUES (?, ?)");
-    $stmt->bind_param("ss", $filename, $contents);
-    $result = $stmt->execute();
-    $stmt->close();
-    $conn->close();
-    return $result;
-}
-
-function dbquery(string $filename): array
-{
-    $conn = new mysqli("localhost", "username", "password", "database");
-    if ($conn->connect_error) {
-        return false;
-    }
-    $stmt = $conn->prepare("SELECT contents FROM files WHERE filename = ?");
-    $stmt->bind_param("s", $filename);
-    $stmt->execute();
-    $stmt->bind_result($contents);
-    $stmt->fetch();
-    $stmt->close();
-    $conn->close();
-    return $contents;
 }
 
 function random_str(): string
@@ -282,9 +257,18 @@ function pathInjectionSecure(string $str): bool
 
 class UnknownUsernameException extends Exception
 {
+    public function __construct(string $username)
+    {
+        parent::__construct("Unknown username: $username");
+    }
 }
+
 class CurrentSessionInstanceMissingException extends Exception
 {
+    public function __construct()
+    {
+        parent::__construct("Current session instance is missing");
+    }
 }
 
 // Root Classes
