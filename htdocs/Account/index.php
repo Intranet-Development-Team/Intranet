@@ -164,10 +164,10 @@ if ($current->accessstatus)
                 {
                     if ($filename !== "." && $filename !== "..")
                     {
-                        $loginhashedid = basename($filename, ".txt");
+                        $loginid = basename($filename, ".txt");
                         $logindata = json_decode(fileread("../Login/Accounts/" . $current->username  . "/Logins/" . $filename), true);
                         $savedlogindata = json_decode(fileread("../Login/Accounts/" . $current->username  . "/Logins/" . $filename), true);
-                        echo '<div class="card card-body mb-2"><h4 class="card-title mt-2 d-flex align-items-baseline"><div>' . $savedlogindata["device"] . '</div><div class="ms-3 fs-6 flex-fill">' . $savedlogindata["browser"] . '</div>' . ($notificationsystemoperator->getNotificationCountByIDnData("new_login", $loginhashedid) ? '<span class="badge rounded-pill bg-danger ms-3" style="font-size:.8rem;">New</span>' : "") . ($logindata["exptime"] <= time() || $logindata["lastactive"] + 60 * 60 * 24 * 14 <= time() ? '<span class="badge rounded-pill bg-secondary d-inline-block ms-3" style="font-size:.5em;vertical-align:.2em;">Session Expired</span>' : "") . '</h4><hr><h6>IP address(es)</h6>' . implode(", ", $savedlogindata["ipaddress"]) . '<hr><h6>Last active time</h6>' . ucfirst(displayDatetime($savedlogindata["lastactive"])) . '<div>' . ($current->hashedloginid === $loginhashedid ? '<h6 class="text-success float-end"><i class="bi bi-check-lg"></i> Your current session</h6>' : '<form id="logoutdevice' . $key . '" method="post" enctype="multipart/form-data" action="#devices" onsubmit="preventMisclick($(\'#logoutbtn' . $key . '\'))"><button type="button" class="btn btn-danger float-end" onclick="confirmModal(\'Log out?\',\'Are you sure to log out from this device?\',\'$(\\\'#logoutdevice' . $key . '\\\').submit()\',\'Cancel\',\'Log out\')" id="logoutbtn' . $key . '"><i class="bi bi-box-arrow-right"></i> Log out from this device</button><input type="hidden" name="logoutdevice" value="' . hash("sha3-512", $filename) . '"></form>') . '</div></div>';
+                        echo '<div class="card card-body mb-2"><h4 class="card-title mt-2 d-flex align-items-baseline"><div>' . $savedlogindata["device"] . '</div><div class="ms-3 fs-6 flex-fill">' . $savedlogindata["browser"] . '</div>' . ($notificationsystemoperator->getNotificationCountByIDnData("new_login", $loginid) ? '<span class="badge rounded-pill bg-danger ms-3" style="font-size:.8rem;">New</span>' : "") . ($logindata["exptime"] <= time() || $logindata["lastactive"] + 60 * 60 * 24 * 7 <= time() ? '<span class="badge rounded-pill bg-secondary d-inline-block ms-3" style="font-size:.5em;vertical-align:.2em;">Session Expired</span>' : "") . '</h4><hr><h6>IP address(es)</h6>' . implode(", ", $savedlogindata["ipaddress"]) . '<hr><h6>Last active time</h6>' . ucfirst(displayDatetime($savedlogindata["lastactive"])) . '<div>' . ($current->loginid === $loginid ? '<h6 class="text-success float-end"><i class="bi bi-check-lg"></i> Your current session</h6>' : '<form id="logoutdevice' . $key . '" method="post" enctype="multipart/form-data" action="#devices" onsubmit="preventMisclick($(\'#logoutbtn' . $key . '\'))"><button type="button" class="btn btn-danger float-end" onclick="confirmModal(\'Log out?\',\'Are you sure to log out from this device?\',\'$(\\\'#logoutdevice' . $key . '\\\').submit()\',\'Cancel\',\'Log out\')" id="logoutbtn' . $key . '"><i class="bi bi-box-arrow-right"></i> Log out from this device</button><input type="hidden" name="logoutdevice" value="' . $loginid . '"></form>') . '</div></div>';
                     }
                 }
 
@@ -177,19 +177,6 @@ if ($current->accessstatus)
         }
         else
         {
-            $numberofnewlogins = 0;
-            if (is_file("../Login/Accounts/" . $current->username  . "/NewLogins.txt"))
-            {
-                $newlogins = (array)json_decode(fileread("../Login/Accounts/" . $current->username  . "/NewLogins.txt"), true);
-
-                foreach ($newlogins as $login)
-                {
-                    if ($login !== $current->hashedloginid)
-                    {
-                        $numberofnewlogins++;
-                    }
-                }
-            }
             echo '<ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" href="#">Info</a>

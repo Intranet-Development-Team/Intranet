@@ -224,13 +224,22 @@ function fileread(string $filename): string
     }
 }
 
-function random_str(): string
+function random_str(bool $allowSpecial = True): string
 {
+    if ($allowSpecial)
+    {
+        $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`~!@#$%^&*()_+-={}[]:\";'<>?,./|\\";
+        $max = 93;
+    }
+    else
+    {
+        $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $max = 61;
+    }
     $return = "";
-    $max = strlen("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`~!@#$%^&*()_+-={}[]:\";'<>?,./|\\") - 1;
     for ($i = 0; $i < 128; ++$i)
     {
-        $return .= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`~!@#$%^&*()_+-={}[]:\";'<>?,./|\\"[random_int(0, $max)];
+        $return .= $characters[random_int(0, $max)];
     }
     return $return;
 }
@@ -349,14 +358,14 @@ class User
 
     public function setpw(string $newpw): void
     {
-        $hash = hash("sha3-512", $newpw);
+        $hash = password_hash($newpw, PASSWORD_ARGON2ID);
         filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/password.txt", $hash);
     }
 
     public function validatepw(string $pw): bool
     {
-        $hash = hash("sha3-512", $pw);
-        if ($hash === fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/password.txt"))
+        $hash = fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/password.txt");
+        if (password_verify($pw, $hash))
         {
             return true;
         }
@@ -382,7 +391,7 @@ class Session extends User
     public string $loginstatusmsg = "";
     public string $accessstatusmsg = "";
 
-    public string $hashedloginid = "";
+    public string $loginid = "";
 
     private array $sitepages = ["nav" => ["Home" => "", "Assignments" => "Assignments", "Calendar" => "Calendar", "Blog" => "Blog", "Chat" => "Chat", "Mail" => "Mail", "Resources" => "Resources", "Support" => "Support"], "navright" => ["Account Settings" => "Account"], "footer" => ["Conduct" => "Conduct", "Copyright" => "Copyright", "Privacy" => "Privacy"]];
     private string $currentpage = "";
@@ -397,17 +406,17 @@ class Session extends User
 
         if (!empty($_COOKIE["user"]) && !empty($_COOKIE["id"]) && !empty($_COOKIE["verification"]))
         {
-            $temphashedid = hash("sha3-512", $_COOKIE["id"]);
+            $temploginid = $_COOKIE["id"];
 
-            if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temphashedid . ".txt"))
+            if (pathInjectionSecure($temploginid) && is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temploginid . ".txt"))
             {
-                $logindata = json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temphashedid . ".txt"), true);
+                $logindata = json_decode(fileread($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temploginid . ".txt"), true);
 
-                if ($logindata["verification"] === hash("sha3-512", $_COOKIE["verification"]) && $logindata["exptime"] > time() && $logindata["lastactive"] + 60 * 60 * 24 * 14 > time())
+                if (password_verify($_COOKIE["verification"], $logindata["verification"]) && $logindata["exptime"] > time() && $logindata["lastactive"] + 60 * 60 * 24 * 7 > time())
                 {
                     ##### Valid session confirmed #####
 
-                    $this->hashedloginid = $temphashedid;
+                    $this->loginid = $temploginid;
                     parent::__construct($_COOKIE["user"]);
 
                     // Update session info
@@ -425,7 +434,7 @@ class Session extends User
                         // Update session verification
                         $randomVerification = random_str();
 
-                        $logindata["verification"] = hash("sha3-512", $randomVerification);
+                        $logindata["verification"] = password_hash($randomVerification, PASSWORD_ARGON2ID);
 
                         setcookie("verification", $randomVerification, [
                             'expires' => time() + 60 * 60 * 24 * 365,
@@ -438,7 +447,7 @@ class Session extends User
                         $_COOKIE["verification"] = $randomVerification;
                     }
 
-                    filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" . $this->hashedloginid . ".txt", json_encode($logindata));
+                    filewrite($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" . $this->loginid . ".txt", json_encode($logindata));
 
                     ##### Ending session operations, starting to check whether to user is able to access the site. #####
 
@@ -499,7 +508,7 @@ class Session extends User
                 {
                     $this->loginstatusmsg = "Session expired. Please retry login.";
 
-                    unlink($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temphashedid . ".txt");
+                    unlink($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $_COOKIE["user"] . "/Logins/" . $temploginid . ".txt");
 
                     if ($autoredirect)
                     {
@@ -655,9 +664,9 @@ class Session extends User
 
     public function logOut(): void
     {
-        if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" . $this->hashedloginid . ".txt"))
+        if (is_file($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" . $this->loginid . ".txt"))
         {
-            unlink($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" .  $this->hashedloginid . ".txt");
+            unlink($_SERVER["DOCUMENT_ROOT"] . "/Login/Accounts/" . $this->username . "/Logins/" .  $this->loginid . ".txt");
         }
         setcookie("user", "", time() - 1000, "/", SITE_DOMAIN, true, true);
         setcookie("id", "", time() - 1000, "/", SITE_DOMAIN, true, true);

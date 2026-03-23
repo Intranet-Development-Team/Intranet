@@ -78,18 +78,18 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !$loggedin)
     {
       do
       {
-        $randomID = random_str();
-      } while (is_file("Accounts/" . $testloginuser->username . "/Logins/" . hash("sha3-512", $randomID) . ".txt"));
+        $randomloginID = random_str(false);
+      } while (is_file("Accounts/" . $testloginuser->username . "/Logins/" . $randomloginID . ".txt"));
       $randomVerification = random_str();
 
       $_COOKIE["user"] = $testloginuser->username;
-      $_COOKIE["id"] = $randomID;
+      $_COOKIE["id"] = $randomloginID;
       $_COOKIE["verification"] = $randomVerification;
       if (!is_dir("Accounts/" . $testloginuser->username . "/Logins"))
       {
         mkdir("Accounts/" . $testloginuser->username . "/Logins");
       }
-      filewrite("Accounts/" . $testloginuser->username . "/Logins/" . hash("sha3-512", $randomID) . ".txt", json_encode(["verification" => hash("sha3-512", $randomVerification), "exptime" =>  time() + 60 * 60 * 24 * 90, "lastactive" => time(), "lastidupdate" => time(), "ipaddress" => [$_SERVER['REMOTE_ADDR']], "device" => getDevice(), "browser" => getBrowser()]));
+      filewrite("Accounts/" . $testloginuser->username . "/Logins/" . $randomloginID . ".txt", json_encode(["verification" => password_hash($randomVerification, PASSWORD_ARGON2ID), "exptime" =>  time() + 60 * 60 * 24 * 90, "lastactive" => time(), "lastidupdate" => time(), "ipaddress" => [$_SERVER['REMOTE_ADDR']], "device" => getDevice(), "browser" => getBrowser()]));
 
       $current = new Session("Login", "", USER_LIST, false);
 
@@ -104,7 +104,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !$loggedin)
         'samesite' => 'Lax',
       ]);
 
-      setcookie("id", $randomID, [
+      setcookie("id", $randomloginID, [
         'expires' => time() + 60 * 60 * 24 * 365,
         'path' => '/',
         'domain' => SITE_DOMAIN,
@@ -122,7 +122,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !$loggedin)
         'samesite' => 'Lax',
       ]);
 
-      $newloginnotification = new Notification("New Login Detected", "A new <b>" . getDevice() . "</b> device has logged in to your account.", "Account Settings", "new_login", hash("sha3-512", $randomID), NotificationType::warning, true);
+      $newloginnotification = new Notification("New Login Detected", "A new <b>" . getDevice() . "</b> device has logged in to your account.", "Account Settings", "new_login", $randomloginID, NotificationType::warning, true);
       $newloginnotification->push([$current->username]);
 
       header("Location: https://" . SITE_DOMAIN . "/" . ($_GET["redirect"] ?? ""));
