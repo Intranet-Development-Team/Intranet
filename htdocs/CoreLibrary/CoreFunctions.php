@@ -659,7 +659,7 @@ class Session extends User
             $links[] = '<a href="' . ($this->currentpage === $name ? "#" : "/" . $link) . '">' . $name . '</a>';
         }
 
-        return '<footer class="mb-3"><hr><p>' . implode(" &middot; ", $links) . '</p><p><small style="display:block;">Site design &copy; Intranet Development Team. All rights reserved.</small></p></footer>';
+        return '<footer class="mb-3"><hr><p>' . implode(" &middot; ", $links) . '</p><p><small>Site design &copy; Intranet Development Team. Licensed under the MIT License.</small></p></footer>';
     }
 
     public function logOut(): void
