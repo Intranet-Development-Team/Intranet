@@ -4,7 +4,7 @@ ob_start();
 // Site Constants
 
 define("SITE_NAME", "Intranet");
-define("SITE_DOMAIN", "localhost");
+define("SITE_DOMAIN", "192.168.1.6");
 
 // Error Handling
 
