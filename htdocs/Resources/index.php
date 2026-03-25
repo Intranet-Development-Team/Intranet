@@ -6,7 +6,7 @@ $current = new Session("Resources", "Resources");
 function getResourcesLinks()
 {
   $displaytext = '';
-  $links = json_decode(fileread("links.txt"), true);
+  $links = (array)json_decode(fileread("links.txt"), true);
   foreach ($links as $category)
   {
     $displaytext .= '<div class="card m-3 card-body"><h4>' . $category["category"] . '</h4><ul class="list-unstyled">';
