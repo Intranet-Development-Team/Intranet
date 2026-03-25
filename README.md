@@ -28,7 +28,7 @@ The below configurations are not required but can be set to enhance the server.
 
 - Memory size: `memory_limit = 8M`
 - Script execution time: `max_execution_time = 30`
-- Php upload limit: `upload_max_filesize = 10M`
+- File upload limit: `upload_max_filesize = 10M`
 
 ### Download
 
