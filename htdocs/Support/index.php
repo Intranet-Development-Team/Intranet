@@ -191,7 +191,7 @@ if ($current->accessstatus)
                </h2>
                <div id="idt" class="accordion-collapse collapse" data-bs-parent="#acronyms">
                   <div class="accordion-body">
-                     The <b>I</b>ntranet <b>D</b>evelopment <b>T</b>eam is a team of developers that creates, updates, monitors, and maintains Intranet.
+                     The <b>I</b>ntranet <b>D</b>evelopment <b>T</b>eam is a team of developers that creates, updates, monitors, and maintains the open-source project Intranet initially. More and more non-team-members are contributing to the development of Intranet. The IDT is no longer the only contributor. For more info, please refer to the <a target="_blank" href="https://<?= SITE_DOMAIN ?>/Support/?about">About page</a>.
                   </div>
                </div>
             </div>
@@ -219,12 +219,12 @@ if ($current->accessstatus)
             <div class="accordion-item">
                <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#joinidt">
-                     How can I join the IDT?
+                     How can I contribute to Intranet development?
                   </button>
                </h2>
                <div id="joinidt" class="accordion-collapse collapse" data-bs-parent="#intranetdev">
                   <div class="accordion-body">
-                     You can apply to any member of the IDT. You need to have a basic understanding of PHP, HTML, JavaScript and computer networking to join.
+                     Our <a href="https://github.com/Intranet-Development-Team/Intranet" target="_blank">GitHub repository</a> is open to the public. You can fork the repository, make changes, and then create a pull request to contribute to Intranet development. We welcome all kinds of contributions, including but not limited to bug fixes, new features, optimizations, and documentation improvements.
                   </div>
                </div>
             </div>
@@ -236,7 +236,7 @@ if ($current->accessstatus)
                </h2>
                <div id="improint" class="accordion-collapse collapse" data-bs-parent="#intranetdev">
                   <div class="accordion-body">
-                     You can <a href="https://<?= SITE_DOMAIN ?>/Support/?feedback">send feedback</a> to us to report bugs you found, tell us what we can do better, and what features do you want in the future. Your support is the best way to help us to improve Intranet and the user experience of others.
+                     You can <a href="https://<?= SITE_DOMAIN ?>/Support/?feedback">send feedback</a> to us to report bugs you found, tell us what we can do better, and what features do you want in the future. Your support is the best way to help us to improve Intranet and the user experience of others. Or, if you are familiar with GitHub, <a href="https://github.com/Intranet-Development-Team/Intranet/issues" target="_blank">create an issue</a> in our GitHub repository.
                   </div>
                </div>
             </div>
@@ -277,7 +277,7 @@ if ($current->accessstatus)
          <h1>Report abuse</h1>
          <h6>Help all the users use Intranet more freely, confidently, equally and productively.</h6>
          <br>
-         <form method="post" enctype="multipart/form-data" nsubmit="preventMisclick($('#reportsubmitbtn'))>
+         <form method="post" enctype="multipart/form-data" onsubmit="preventMisclick($('#reportsubmitbtn'))">
             <input type="text" class="form-control form-control-lg" placeholder="Descriptive title" name="abusetitle" required> <br>
             <h5>Basic information of the incident:</h5>
             <input type="text" class="form-control" placeholder="When did the incident happen?" name="when" required> <br><input type="text" class="form-control" placeholder="Who is/are involved in the incident?" name="who" required> <br><input type="text" class="form-control" placeholder="Where (Which page(s) on Intranet) did the incident happen?" name="where" required> <br>
@@ -302,9 +302,9 @@ if ($current->accessstatus)
          <br>
          <hr>
          <h5 style="text-align:center;line-height:1.5em;">
-            Version 3.1<br>Released on 08/12/2024<br><br>Site design &copy; Intranet Development Team<br>
-            <p>All rights reserved</p><br>
-            <h6 style="text-align:center;line-height:1.5em;">Members of Intranet Development Team<br>Henry Chan<br></h6>
+            Version 3.2<br>Released on 25/3/2026<br><br>Site design &copy; Intranet Development Team<br>
+            <p>Licensed under the MIT License.</p><br>
+            <h6 style="text-align:center;line-height:1.5em;">Members of the Intranet Development Team<br>Henry Chan<br></h6>
          </h5>
       <?php
       }
