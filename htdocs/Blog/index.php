@@ -18,7 +18,7 @@ require_once("../CoreLibrary/Blog.php");
 
     echo '<h1 class="d-flex"><span class="flex-fill">Blog</span><a type="button" class="btn btn-success align-self-center" href="/NewBlog">+ Write new blog</a></h1><hr>';
     $avaliableblogsids = [];
-    for ($i = count(array_diff(scandir("Blogs"), array('..', '.'))); $i >= 1; --$i)
+    for ($i = count(array_diff(scandir("Blogs"), array('..', '.', '.gitkeep'))); $i >= 1; --$i)
     {
       $blogfilecontent = fileread($_SERVER["DOCUMENT_ROOT"] . "/Blog/Blogs/$i.txt");
       if ($blogfilecontent != "DELETED")

@@ -24,7 +24,7 @@ function getfilesize($filename)
 
 if ($current->accessstatus && pathInjectionSecure($_GET["filepath"] ?? ""))
 {
-    $scanneddir = array_diff(scandir("Resources Files/FILES/" . ($_GET["filepath"] ?? "")), array('..', '.'));
+    $scanneddir = array_diff(scandir("Resources Files/FILES/" . ($_GET["filepath"] ?? "")), array('..', '.', '.gitkeep'));
     $finaldisplay = [];
     $result = "";
     foreach ($scanneddir as $item)
