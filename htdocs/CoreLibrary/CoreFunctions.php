@@ -427,9 +427,9 @@ class Session extends User
                         $logindata["ipaddress"][] = $_SERVER["REMOTE_ADDR"];
                     }
 
-                    if ($logindata["lastidupdate"] + 60 * 60 * 24 < time())
+                    if ($logindata["lastverificationupdate"] + 60 * 60 * 24 < time())
                     {
-                        $logindata["lastidupdate"] = time();
+                        $logindata["lastverificationupdate"] = time();
 
                         // Update session verification
                         $randomVerification = random_str();

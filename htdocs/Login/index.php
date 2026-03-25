@@ -89,7 +89,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !$loggedin)
       {
         mkdir("Accounts/" . $testloginuser->username . "/Logins");
       }
-      filewrite("Accounts/" . $testloginuser->username . "/Logins/" . $randomloginID . ".txt", json_encode(["verification" => password_hash($randomVerification, PASSWORD_ARGON2ID), "exptime" =>  time() + 60 * 60 * 24 * 90, "lastactive" => time(), "lastidupdate" => time(), "ipaddress" => [$_SERVER['REMOTE_ADDR']], "device" => getDevice(), "browser" => getBrowser()]));
+      filewrite("Accounts/" . $testloginuser->username . "/Logins/" . $randomloginID . ".txt", json_encode(["verification" => password_hash($randomVerification, PASSWORD_ARGON2ID), "exptime" =>  time() + 60 * 60 * 24 * 90, "lastactive" => time(), "lastverificationupdate" => time(), "ipaddress" => [$_SERVER['REMOTE_ADDR']], "device" => getDevice(), "browser" => getBrowser()]));
 
       $current = new Session("Login", "", USER_LIST, false);
 
